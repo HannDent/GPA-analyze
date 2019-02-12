@@ -1,0 +1,80 @@
+﻿{% extends "./_base.html" %}
+  {% block base %}
+
+    <div class="container">
+    	<ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+			<li class="active">英雄榜</li>
+		</ol>
+
+		<div class="panel-group col-md-4 hidden-xs" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">点击展开，显示详细数据。</a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <div class="panel-body">
+
+            <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+				<caption>每次考试各项第一名</caption>
+				<thead>
+					<tr class="danger" style="font-weight: bold">
+						<td>考试</td>
+						<td>姓名</td>
+						<td>科目</td>
+						<td>分数</td>
+						<td>名次</td>
+					</tr>
+				</thead>
+				<tbody>
+					{% for it in one %}
+						{% if forloop.counter|divisibleby:2 %}
+						<tr class="success">
+						{% else %}
+						<tr class="warning">
+						{% endif %}
+						<td class="test">{{ it.0 }}</td>
+						<td class="name">{{ it.1 }}</td>
+						<td class="item">{{ it.2 }}</td>
+						<td class="score">{{ it.3 }}</td>
+						<td class="sort">{{ it.4 }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+		<div class="col-md-8  col-xs-12">
+			<div id="cavtest" style="height: 50%"></div>
+			<div>
+                <p>每次考试各科班级第一名，在年级上的表现。</p>
+            </div>
+            <hr />
+
+			<div id="cavtime" style="height: 50%"></div>
+			<div>
+                <p>各科班级第一名，前后考试对比。</p>
+            </div>
+            <hr />
+
+			<div id="cavname" style="height: 50%"></div>
+			<div>
+                <p>拿班级第一名次数。</p>
+            </div>
+            <hr />
+
+		</div>
+		
+    </div>
+
+  {% endblock base %}
+  {% block js %}
+    <script src="/Static/cjss/echartGPA.js"></script>
+    <script src="/Static/cjss/toplist.js"></script>
+  {% endblock js %}

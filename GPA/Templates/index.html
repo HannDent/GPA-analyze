@@ -1,0 +1,73 @@
+﻿{% extends "./_base.html" %}
+  {% block base %}
+
+    <div class="container">
+    	<ol class="breadcrumb">
+			<li class="active">主页</li>
+		</ol>
+
+    	<div class="row hidden-xs">
+    		<img src="Static/img/mainsprit_lg.jpg"  class="img-responsive center-block " alt="Mmage"/>
+    	</div>
+    	<div class="row visible-xs">
+    		<img src="Static/img/mainsprit_xs.jpg"  class="img-responsive center-block " alt="Mmage"/>
+    	</div>
+
+        <br /><br />
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">当前考试榜单</h2>
+            </div>
+            <div class="panel-body">上一次考试各科目成绩最好的同学，希望其他同学努力，努力，再努力！才可能有机会下次出现你的身影。</div>
+        </div>
+    	<div class="row">
+            {% for item in one %}
+                {% if forloop.counter|divisibleby:2 %}
+                <div class="col-md-4 col-sm-6 col-xs-12"  style="background-color:#eff;">
+                    <div class="bs-callout bs-callout-info">
+                        <h4>{{ item.0 }}</h4>
+                        <p>{{ item.1 }}</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-md-4 col-sm-6 col-xs-12"  style="background-color:#efe;">
+                    <div class="bs-callout bs-callout-success">
+                        <h4>{{ item.0 }}</h4>
+                        <p>{{ item.1 }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <p>&nbsp;</p>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">历史记录榜单</h2>
+            </div>
+            <div class="panel-body">所有考试各科目成绩最好同学，以年级排名为准。最高记录是优秀者力求探知到另一个境界所创造的。希望下次上榜者就是你，行动要快哦！</div>
+        </div>
+  		<div class="row">
+            {% for item in two %}
+                {% if forloop.counter|divisibleby:2 %}
+                <div class="col-md-4 col-sm-6 col-xs-12"  style="background-color:#fff6f6;">
+                    <div class="bs-callout bs-callout-danger">
+                        <h4>{{ item.0 }}</h4>
+                        <p>{{ item.1 }}</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="col-md-4 col-sm-6 col-xs-12"  style="background-color:#ffe;">
+                    <div class="bs-callout bs-callout-warning">
+                        <h4>{{ item.0 }}</h4>
+                        <p>{{ item.1 }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+    	</div>
+        <br />
+    </div>
+
+  {% endblock base %}

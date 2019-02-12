@@ -1,0 +1,114 @@
+﻿{% extends "./_base.html" %}
+  {% block base %}
+
+    <div class="container">
+    	<ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="/single">个人成绩</a></li>
+			<li class="active">{{ title }}</li>
+		</ol>
+
+    	<div class="row">
+    		<div class="col-sm-12 col-xs-12">
+                <div class="col-sm-4">
+                    <div class="bs-callout bs-callout-default">
+                        <h4>{{ title }}</h4>
+                        <p>详细记录</p>
+                    </div>
+                </div>
+                <div class="col-sm-8"></div>
+        
+                <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+                    <caption>{{ title }}每次考试成绩记录</caption>
+                    <thead>
+                       <tr class="danger" style="font-weight: bold">
+                            <td>考试</td>
+                            <td>数学</td>
+                            <td>名次</td>
+                            <td>语文</td>
+                            <td>名次</td>
+                            <td>英语</td>
+                            <td>名次</td>
+                            <td>物理</td>
+                            <td>名次</td>
+                            <td>化学</td>
+                            <td>名次</td>
+                            <td>生物</td>
+                            <td>名次</td>
+                            <td>历史</td>
+                            <td>名次</td>
+                            <td>政治</td>
+                            <td>名次</td>
+                            <td>地理</td>
+                            <td>名次</td>
+                            <td>总分数</td>
+                            <td>总名次</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for it in two %}
+                            {% if forloop.counter|divisibleby:2 %}
+                            <tr class="success">
+                            {% else %}
+                            <tr class="warning">
+                        {% endif %}
+                            <td class="test">{{ it.0 }}</td>
+                            <td class="maths">{{ it.1 }}</td>
+                            <td class="mathsSort">{{ it.2 }}</td>
+                            <td class="chinese">{{ it.3 }}</td>
+                            <td class="chineseSort">{{ it.4 }}</td>
+                            <td class="english">{{ it.5 }}</td>
+                            <td class="englishSort">{{ it.6 }}</td>
+                            <td class="physics">{{ it.7 }}</td>
+                            <td class="physicsSort">{{ it.8 }}</td>
+                            <td class="chymistry">{{ it.9 }}</td>
+                            <td class="chymistrySort">{{ it.10 }}</td>
+                            <td class="biology">{{ it.11 }}</td>
+                            <td class="biologySort">{{ it.12 }}</td>
+                            <td class="history">{{ it.13 }}</td>
+                            <td class="historySort">{{ it.14 }}</td>
+                            <td class="politics">{{ it.15 }}</td>
+                            <td class="politicsSort">{{ it.16 }}</td>
+                            <td class="geography">{{ it.17 }}</td>
+                            <td class="geographySort">{{ it.18 }}</td>
+                            <td class="total">{{ it.19 }}</td>
+                            <td class="totalSort">{{ it.20 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div id="cavtest" style="height: 50%"></div>
+                <div>
+                    <p>为方便理解，这里均用年级排名显示。</p>
+                </div>
+                <hr />
+
+                <div id="cavsort" style="height: 50%"></div>
+                <div>
+                    <p>年级排名折线图</p>
+                </div>
+                <hr />
+
+                <div id="cavtime" style="height: 50%"></div>
+                <div>
+                    <p>为方便理解，这里均用分数显示，总分除以5后显示。</p>
+                </div>
+                <hr />
+
+                <div id="cavname" style="height: 50%"></div>
+                <div>
+                    <p>{{ title }}在英雄榜里出现了<span id="aa">{{ a }}</span>次，一共有<span id="bb">{{ b }}</span>次。</p>
+                </div>
+
+    		</div>
+    	</div>
+        <br>
+    </div>
+
+  {% endblock base %}
+
+  {% block js %}
+    <script src="/Static/cjss/echartGPA.js"></script>
+    <script src="/Static/cjss/single.js"></script>
+  {% endblock js %}

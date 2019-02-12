@@ -1,0 +1,559 @@
+﻿{% extends "./_base.html" %}
+  {% block base %}
+
+    <div class="container">
+    	<ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="/whole">整体情况</a></li>
+			<li class="active">{{ title }}</li>
+		</ol>
+
+    	<div class="row">
+    		<div class="col-sm-12 col-xs-12">
+                <div class="col-sm-4">
+    			    <div class="bs-callout bs-callout-primary">
+                        <h4>{{ title }}</h4>
+                        <p>详细记录</p>
+                    </div>
+                </div>
+                <div class="col-sm-8"></div>
+
+                <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+                    <caption>{{ title }}考试详细记录</caption>
+                    <thead>
+                       <tr class="danger" style="font-weight: bold">
+                            <td>参数</td>
+                            <td>数学</td>
+                            <td>语文</td>
+                            <td>英语</td>
+                            <td>物理</td>
+                            <td>化学</td>
+                            <td>生物</td>
+                            <td>历史</td>
+                            <td>政治</td>
+                            <td>地理</td>
+                            <td>总评</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="success">
+                            <td id="name0">中位数</td>
+                            <td id="maths0">0</td>
+                            <td id="chinese0">0</td>
+                            <td id="english0">0</td>
+                            <td id="physics0">0</td>
+                            <td id="chymistry0">0</td>
+                            <td id="biology0">0</td>
+                            <td id="history0">0</td>
+                            <td id="politics0">0</td>
+                            <td id="geography0">0</td>
+                            <td id="total0">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="name1">中位数年级排名</td>
+                            <td id="maths1">0</td>
+                            <td id="chinese1">0</td>
+                            <td id="english1">0</td>
+                            <td id="physics1">0</td>
+                            <td id="chymistry1">0</td>
+                            <td id="biology1">0</td>
+                            <td id="history1">0</td>
+                            <td id="politics1">0</td>
+                            <td id="geography1">0</td>
+                            <td id="total1">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="name2">平均数</td>
+                            <td id="maths2">0</td>
+                            <td id="chinese2">0</td>
+                            <td id="english2">0</td>
+                            <td id="physics2">0</td>
+                            <td id="chymistry2">0</td>
+                            <td id="biology2">0</td>
+                            <td id="history2">0</td>
+                            <td id="politics2">0</td>
+                            <td id="geography2">0</td>
+                            <td id="total2">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="name3">平均数年级排名</td>
+                            <td id="maths3">0</td>
+                            <td id="chinese3">0</td>
+                            <td id="english3">0</td>
+                            <td id="physics3">0</td>
+                            <td id="chymistry3">0</td>
+                            <td id="biology3">0</td>
+                            <td id="history3">0</td>
+                            <td id="politics3">0</td>
+                            <td id="geography3">0</td>
+                            <td id="total3">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="name4">离散系数</td>
+                            <td id="maths4">0</td>
+                            <td id="chinese4">0</td>
+                            <td id="english4">0</td>
+                            <td id="physics4">0</td>
+                            <td id="chymistry4">0</td>
+                            <td id="biology4">0</td>
+                            <td id="history4">0</td>
+                            <td id="politics4">0</td>
+                            <td id="geography4">0</td>
+                            <td id="total4">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr />
+                <div id="cavtest" style="height: 50%"></div>
+                <hr />
+
+                <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+                    <caption>{{ title }}各科目分数相关系数</caption>
+                    <thead>
+                       <tr class="danger" style="font-weight: bold">
+                            <td>系数</td>
+                            <td>综合</td>
+                            <td>数学</td>
+                            <td>语文</td>
+                            <td>英语</td>
+                            <td>物理</td>
+                            <td>化学</td>
+                            <td>生物</td>
+                            <td>历史</td>
+                            <td>政治</td>
+                            <td>地理</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="success">
+                            <td id="cov0">综合</td>
+                            <td id="tota0">0</td>
+                            <td id="math0">0</td>
+                            <td id="chin0">0</td>
+                            <td id="engl0">0</td>
+                            <td id="phys0">0</td>
+                            <td id="chym0">0</td>
+                            <td id="biol0">0</td>
+                            <td id="hist0">0</td>
+                            <td id="poli0">0</td>
+                            <td id="geog0">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="cov1">数学</td>
+                            <td id="tota1">0</td>
+                            <td id="math1">0</td>
+                            <td id="chin1">0</td>
+                            <td id="engl1">0</td>
+                            <td id="phys1">0</td>
+                            <td id="chym1">0</td>
+                            <td id="biol1">0</td>
+                            <td id="hist1">0</td>
+                            <td id="poli1">0</td>
+                            <td id="geog1">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="cov2">语文</td>
+                            <td id="tota2">0</td>
+                            <td id="math2">0</td>
+                            <td id="chin2">0</td>
+                            <td id="engl2">0</td>
+                            <td id="phys2">0</td>
+                            <td id="chym2">0</td>
+                            <td id="biol2">0</td>
+                            <td id="hist2">0</td>
+                            <td id="poli2">0</td>
+                            <td id="geog2">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="cov3">英语</td>
+                            <td id="tota3">0</td>
+                            <td id="math3">0</td>
+                            <td id="chin3">0</td>
+                            <td id="engl3">0</td>
+                            <td id="phys3">0</td>
+                            <td id="chym3">0</td>
+                            <td id="biol3">0</td>
+                            <td id="hist3">0</td>
+                            <td id="poli3">0</td>
+                            <td id="geog3">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="cov4">物理</td>
+                            <td id="tota4">0</td>
+                            <td id="math4">0</td>
+                            <td id="chin4">0</td>
+                            <td id="engl4">0</td>
+                            <td id="phys4">0</td>
+                            <td id="chym4">0</td>
+                            <td id="biol4">0</td>
+                            <td id="hist4">0</td>
+                            <td id="poli4">0</td>
+                            <td id="geog4">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="cov5">化学</td>
+                            <td id="tota5">0</td>
+                            <td id="math5">0</td>
+                            <td id="chin5">0</td>
+                            <td id="engl5">0</td>
+                            <td id="phys5">0</td>
+                            <td id="chym5">0</td>
+                            <td id="biol5">0</td>
+                            <td id="hist5">0</td>
+                            <td id="poli5">0</td>
+                            <td id="geog5">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="cov6">生物</td>
+                            <td id="tota6">0</td>
+                            <td id="math6">0</td>
+                            <td id="chin6">0</td>
+                            <td id="engl6">0</td>
+                            <td id="phys6">0</td>
+                            <td id="chym6">0</td>
+                            <td id="biol6">0</td>
+                            <td id="hist6">0</td>
+                            <td id="poli6">0</td>
+                            <td id="geog6">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="cov7">历史</td>
+                            <td id="tota7">0</td>
+                            <td id="math7">0</td>
+                            <td id="chin7">0</td>
+                            <td id="engl7">0</td>
+                            <td id="phys7">0</td>
+                            <td id="chym7">0</td>
+                            <td id="biol7">0</td>
+                            <td id="hist7">0</td>
+                            <td id="poli7">0</td>
+                            <td id="geog7">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="cov8">政治</td>
+                            <td id="tota8">0</td>
+                            <td id="math8">0</td>
+                            <td id="chin8">0</td>
+                            <td id="engl8">0</td>
+                            <td id="phys8">0</td>
+                            <td id="chym8">0</td>
+                            <td id="biol8">0</td>
+                            <td id="hist8">0</td>
+                            <td id="poli8">0</td>
+                            <td id="geog8">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="cov9">地理</td>
+                            <td id="tota9">0</td>
+                            <td id="math9">0</td>
+                            <td id="chin9">0</td>
+                            <td id="engl9">0</td>
+                            <td id="phys9">0</td>
+                            <td id="chym9">0</td>
+                            <td id="biol9">0</td>
+                            <td id="hist9">0</td>
+                            <td id="poli9">0</td>
+                            <td id="geog9">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+                    <caption>{{ title }}各科目年级排名相关系数</caption>
+                    <thead>
+                       <tr class="danger" style="font-weight: bold">
+                            <td>系数</td>
+                            <td>综合</td>
+                            <td>数学</td>
+                            <td>语文</td>
+                            <td>英语</td>
+                            <td>物理</td>
+                            <td>化学</td>
+                            <td>生物</td>
+                            <td>历史</td>
+                            <td>政治</td>
+                            <td>地理</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="success">
+                            <td id="co0">综合</td>
+                            <td id="tot0">0</td>
+                            <td id="mat0">0</td>
+                            <td id="chi0">0</td>
+                            <td id="eng0">0</td>
+                            <td id="phy0">0</td>
+                            <td id="chy0">0</td>
+                            <td id="bio0">0</td>
+                            <td id="his0">0</td>
+                            <td id="pol0">0</td>
+                            <td id="geo0">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="co1">数学</td>
+                            <td id="tot1">0</td>
+                            <td id="mat1">0</td>
+                            <td id="chi1">0</td>
+                            <td id="eng1">0</td>
+                            <td id="phy1">0</td>
+                            <td id="chy1">0</td>
+                            <td id="bio1">0</td>
+                            <td id="his1">0</td>
+                            <td id="pol1">0</td>
+                            <td id="geo1">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="co2">语文</td>
+                            <td id="tot2">0</td>
+                            <td id="mat2">0</td>
+                            <td id="chi2">0</td>
+                            <td id="eng2">0</td>
+                            <td id="phy2">0</td>
+                            <td id="chy2">0</td>
+                            <td id="bio2">0</td>
+                            <td id="his2">0</td>
+                            <td id="pol2">0</td>
+                            <td id="geo2">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="co3">英语</td>
+                            <td id="tot3">0</td>
+                            <td id="mat3">0</td>
+                            <td id="chi3">0</td>
+                            <td id="eng3">0</td>
+                            <td id="phy3">0</td>
+                            <td id="chy3">0</td>
+                            <td id="bio3">0</td>
+                            <td id="his3">0</td>
+                            <td id="pol3">0</td>
+                            <td id="geo3">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="co4">物理</td>
+                            <td id="tot4">0</td>
+                            <td id="mat4">0</td>
+                            <td id="chi4">0</td>
+                            <td id="eng4">0</td>
+                            <td id="phy4">0</td>
+                            <td id="chy4">0</td>
+                            <td id="bio4">0</td>
+                            <td id="his4">0</td>
+                            <td id="pol4">0</td>
+                            <td id="geo4">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="co5">化学</td>
+                            <td id="tot5">0</td>
+                            <td id="mat5">0</td>
+                            <td id="chi5">0</td>
+                            <td id="eng5">0</td>
+                            <td id="phy5">0</td>
+                            <td id="chy5">0</td>
+                            <td id="bio5">0</td>
+                            <td id="his5">0</td>
+                            <td id="pol5">0</td>
+                            <td id="geo5">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="co6">生物</td>
+                            <td id="tot6">0</td>
+                            <td id="mat6">0</td>
+                            <td id="chi6">0</td>
+                            <td id="eng6">0</td>
+                            <td id="phy6">0</td>
+                            <td id="chy6">0</td>
+                            <td id="bio6">0</td>
+                            <td id="his6">0</td>
+                            <td id="pol6">0</td>
+                            <td id="geo6">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="co7">历史</td>
+                            <td id="tot7">0</td>
+                            <td id="mat7">0</td>
+                            <td id="chi7">0</td>
+                            <td id="eng7">0</td>
+                            <td id="phy7">0</td>
+                            <td id="chy7">0</td>
+                            <td id="bio7">0</td>
+                            <td id="his7">0</td>
+                            <td id="pol7">0</td>
+                            <td id="geo7">0</td>
+                        </tr>
+                        <tr class="success">
+                            <td id="co8">政治</td>
+                            <td id="tot8">0</td>
+                            <td id="mat8">0</td>
+                            <td id="chi8">0</td>
+                            <td id="eng8">0</td>
+                            <td id="phy8">0</td>
+                            <td id="chy8">0</td>
+                            <td id="bio8">0</td>
+                            <td id="his8">0</td>
+                            <td id="pol8">0</td>
+                            <td id="geo8">0</td>
+                        </tr>
+                        <tr class="warning">
+                            <td id="co9">地理</td>
+                            <td id="tot9">0</td>
+                            <td id="mat9">0</td>
+                            <td id="chi9">0</td>
+                            <td id="eng9">0</td>
+                            <td id="phy9">0</td>
+                            <td id="chy9">0</td>
+                            <td id="bio9">0</td>
+                            <td id="his9">0</td>
+                            <td id="pol9">0</td>
+                            <td id="geo9">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <hr />
+                <div id="cavmuti" style="height: 50%"></div>
+                <div>
+                    <p>所有科目年级排名综合对比。</p>
+                </div>
+
+                <hr />
+                <div id="cavtot" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aatot">0</span>。</p>
+                </div>
+                <hr />
+                <div id="cavmat" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aamat">0</span>。</p>
+                </div>
+                <hr />
+                <div id="cavchi" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aachi">0</span>。</p>
+                </div>
+                <hr />
+                <div id="caveng" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aaeng">0</span>。</p>
+                </div>
+                <hr />
+                <div id="cavphy" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aaphy">0</span>。</p>
+                </div>
+                <hr />
+                <div id="cavchy" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aachy">0</span>。</p>
+                </div>
+                <hr />
+                <div id="cavbio" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aabio">0</span>。</p>
+                </div>
+                <hr />
+                <div id="cavhis" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aahis">0</span>。</p>
+                </div>
+                <hr />
+                <div id="cavpol" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aapol">0</span>。</p>
+                </div>
+                <hr />
+                <div id="cavgeo" style="height: 50%"></div>
+                <div>
+                    <p>偏度为<span id="aageo">0</span>。</p>
+                </div>
+                <hr />
+                
+                
+
+                <div class="panel-group col-sm-12 hidden-xs" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">点击展开，显示详细数据。</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+
+                <div  class="col-sm-12">
+                <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+                    <caption>{{ title }}考试详细记录</caption>
+                    <thead>
+                       <tr class="danger" style="font-weight: bold">
+                            <td>姓名</td>
+                            <td>数学</td>
+                            <td>名次</td>
+                            <td>语文</td>
+                            <td>名次</td>
+                            <td>英语</td>
+                            <td>名次</td>
+                            <td>物理</td>
+                            <td>名次</td>
+                            <td>化学</td>
+                            <td>名次</td>
+                            <td>生物</td>
+                            <td>名次</td>
+                            <td>历史</td>
+                            <td>名次</td>
+                            <td>政治</td>
+                            <td>名次</td>
+                            <td>地理</td>
+                            <td>名次</td>
+                            <td>总分数</td>
+                            <td>总名次</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for it in two %}
+                            {% if forloop.counter|divisibleby:2 %}
+                            <tr class="success excelone">
+                            {% else %}
+                            <tr class="warning excelone">
+                        {% endif %}
+                            <td class="name">{{ it.0 }}</td>
+                            <td class="maths">{{ it.1 }}</td>
+                            <td class="mathsSort">{{ it.2 }}</td>
+                            <td class="chinese">{{ it.3 }}</td>
+                            <td class="chineseSort">{{ it.4 }}</td>
+                            <td class="english">{{ it.5 }}</td>
+                            <td class="englishSort">{{ it.6 }}</td>
+                            <td class="physics">{{ it.7 }}</td>
+                            <td class="physicsSort">{{ it.8 }}</td>
+                            <td class="chymistry">{{ it.9 }}</td>
+                            <td class="chymistrySort">{{ it.10 }}</td>
+                            <td class="biology">{{ it.11 }}</td>
+                            <td class="biologySort">{{ it.12 }}</td>
+                            <td class="history">{{ it.13 }}</td>
+                            <td class="historySort">{{ it.14 }}</td>
+                            <td class="politics">{{ it.15 }}</td>
+                            <td class="politicsSort">{{ it.16 }}</td>
+                            <td class="geography">{{ it.17 }}</td>
+                            <td class="geographySort">{{ it.18 }}</td>
+                            <td class="total">{{ it.19 }}</td>
+                            <td class="totalSort">{{ it.20 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    		</div>
+    	</div>
+        <br>
+    </div>
+
+  {% endblock base %}
+
+  {% block js %}
+    <script src="/Static/cjss/echartGPA.js"></script>
+    <script src="/Static/cjss/whole.js"></script>
+  {% endblock js %}

@@ -1,0 +1,118 @@
+﻿{% extends "./_base.html" %}
+  {% block base %}
+
+    <div class="container">
+    	<ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li><a href="/analyze">历史分析</a></li>
+			<li class="active">{{ title }}</li>
+		</ol>
+
+    	<div class="row">
+    		<div class="">
+                <div class="panel panel-default col-sm-1 hidden-xs">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">{{ title }}</h2>
+                    </div>
+                </div>
+                <div class="col-sm-1 hidden-xs"></div>
+    			{% for it in one %}
+                <div class="col-sm-2 hidden-xs">
+					<h3 class="panel-title">{{ it.title }}</h3>
+					<p>考试时间：{{ it.time }}</p>
+				</div>
+				{% endfor %}
+    		</div>
+
+    		<div class="col-sm-12">
+                <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+                    <caption>{{ title }}成绩分析</caption>
+                    <thead>
+                       <tr class="danger" style="font-weight: bold">
+                            <td>{{ title }}</td>
+                            <td>中位数</td>
+                            <td>中位数排名</td>
+                            <td>平均数</td>
+                            <td>平均数排名</td>
+                            <td>离散系数</td>
+                            <td>偏度</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tbdata">
+                    </tbody>
+                </table>
+
+
+                <hr />
+                <div id="cavus" style="height: 50%"></div>
+                <div>
+                    <p>。</p>
+                </div>
+                <hr />
+                <div id="cavms" style="height: 50%"></div>
+                <div>
+                    <p>。</p>
+                </div>
+                <hr />
+                <div id="cavds" style="height: 50%"></div>
+                <div>
+                    <p>。</p>
+                </div>
+                <hr />
+    		</div>
+
+    		
+
+            <div class="panel-group col-sm-12 hidden-xs" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">点击展开，显示详细数据。</a>
+                        </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            
+            <div  class="col-sm-12">
+                {% for it in one %}
+                <div  class="col-sm-2">
+                <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+                    <caption class="name">{{ it.title }}</caption>
+                    <thead>
+                       <tr class="danger" style="font-weight: bold">
+                            <td>成绩</td>
+                            <td>排名</td>
+                        </tr>
+                    </thead>
+                    <tbody id="one{{ forloop.counter0 }}">
+                        {% for is in it.list %}
+                            {% if forloop.counter|divisibleby:2 %}
+                            <tr class="success onet">
+                            {% else %}
+                            <tr class="warning onet">
+                            {% endif %}
+                                <td class="score">{{ is.0 }}</td>
+                                <td class="scoreSort">{{ is.1 }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                </div>
+                {% endfor %}
+            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    	</div>
+        <br>
+    </div>
+
+  {% endblock base %}
+
+  {% block js %}
+    <script src="/Static/cjss/echartGPA.js"></script>
+    <script src="/Static/cjss/analyze.js"></script>
+  {% endblock js %}

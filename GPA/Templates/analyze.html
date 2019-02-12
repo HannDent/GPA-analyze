@@ -1,0 +1,47 @@
+﻿{% extends "./_base.html" %}
+  {% block base %}
+
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li class="active">历史分析</li>
+        </ol>
+
+        <div class="row">
+            <div class="col-sm-2 col-xs-12"  style="background-color:#eee;">
+                <br>
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="/analyze/0">综合</a></li>
+                    <li class="list-group-item"><a href="/analyze/1">数学</a></li>
+                    <li class="list-group-item"><a href="/analyze/2">语文</a></li>
+                    <li class="list-group-item"><a href="/analyze/3">英语</a></li>
+                    <li class="list-group-item"><a href="/analyze/4">物理</a></li>
+                    <li class="list-group-item"><a href="/analyze/5">化学</a></li>
+                    <li class="list-group-item"><a href="/analyze/6">生物</a></li>
+                    <li class="list-group-item"><a href="/analyze/7">历史</a></li>
+                    <li class="list-group-item"><a href="/analyze/8">政治</a></li>
+                    <li class="list-group-item"><a href="/analyze/9">地理</a></li>
+                </ul>
+            </div>
+            <div class="col-sm-4 col-xs-12"">
+                <br>
+                <img src="Static/img/gpa4.jpeg" class="img-thumbnail" />
+            </div>
+            <div class="col-sm-6 col-xs-12"">
+                <br>
+                <h3>功能说明</h3>
+                <br>
+                <p><span style="padding-left:2em"></span>历史分析列举出考试科目，可以查看单科考试不同参数的变化。分别列举出：中位数、平均数、离散系数和偏度等统计量，下面的统计量说明均为通常的统计解释，具体环境还需要具体分析仅具有参考价值。</p>
+                <p><span style="padding-left:2em"></span>雷达图反应这次考试不同科目的对比，越靠近中心中位数成绩越好，以年级排名为准。各科目柱状图是这次考试的成绩分布情况，可以反应出班内各层次的成绩情况，是否有成绩断层。</p>
+                <br>
+                <p><span style="padding-left:2em"></span>中位数（又称中值，英语：Median），统计学中的专有名词，代表一个样本分布中的一个数值，其可将数值集合划分为相等的上下两部分。对于有限的数集，可以通过把所有观察值高低排序后找出正中间的一个作为中位数。如果样本数量是偶数，这里取最中间的两个较低一个作为中位数。</p>
+                <p><span style="padding-left:2em"></span>平均数是表示一组数据集中趋势的统计量。对于考试成绩来说，如果平均数会低于中位数，说明班级上有人拖后腿没有尽力在学习上。而一个优秀的班级通常是成正态分布的。</p>
+                <p><span style="padding-left:2em"></span>离散系数又称变异系数，是统计学当中的常用统计指标。离散系数是测度数据离散程度的相对统计量，主要是用于比较不同样本数据的离散程度。离散系数大，说明数据的离散程度也大；离散系数小，说明数据的离散程度也小。通常超过0.15，就被认为样本不集中。就考试成绩来说数学天然就比语文的离散系数要高，这个需要老师具体分析。</p>
+                <p><span style="padding-left:2em"></span>偏度也称为偏态、偏态系数，是统计数据分布偏斜方向和程度的度量，是统计数据分布非对称程度的数字特征。其实就是样本的三阶矩，也可以反应成绩有没有特别突出的和特别差劲的。</p>
+                <br>
+            </div>
+        </div>
+        <br>
+    </div>
+
+  {% endblock base %}
