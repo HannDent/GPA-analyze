@@ -14,7 +14,7 @@ class Person(models.Model):
 
 class Exam(models.Model):
 	id = models.AutoField(primary_key=True)
-	test = models.CharField(default="高一秋季0", max_length=16)
+	test = models.CharField(default="2018秋0", max_length=16)
 	time = models.DateField(auto_now_add = True)
 	class Meta:
 		ordering=['-id']

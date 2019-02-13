@@ -3,7 +3,11 @@ from Model.models import TopList,Exam
 from django.db.models import Min
 
 def index(request):
-	dat = Exam.objects.first().topexam.all();
+	if Exam.objects.all().exists():
+		dat = Exam.objects.first().topexam.all();
+	else:
+		return render(request, 'wrong.html');
+
 	iteb=['综合','数学','语文','英语','物理','化学','生物','历史','政治','地理'];
 	parm=[['综合第一',''],['数学第一',''],['语文第一',''],['英语第一',''],['物理第一',''],['化学第一',''],['生物第一',''],['历史第一',''],['政治第一',''],['地理第一','']];
 	parb=[['综合记录',''],['数学记录',''],['语文记录',''],['英语记录',''],['物理记录',''],['化学记录',''],['生物记录',''],['历史记录',''],['政治记录',''],['地理记录','']];
@@ -82,5 +86,4 @@ def toplist(request):
 	return render(request, 'toplist.html',stg);
 
 def info(request):
-	stg = {'test':"this_is_test_request",'this':"info"};
-	return render(request, 'info.html', stg);
+	return render(request, 'info.html');
