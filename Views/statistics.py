@@ -4,7 +4,11 @@ from django.db.models.aggregates import Count
 from django.db.models import Min,Max
 
 def analyze(request, a_id=-1):
-	listexam = Exam.objects.all();
+	if Exam.objects.all().exists():
+		listexam = Exam.objects.all();
+	else:
+		return render(request, 'wrong.html');
+
 	parm = [];
 	parc = [];
 	parn = [];
@@ -115,7 +119,11 @@ def analyze(request, a_id=-1):
 	return render(request, 'analyzetitle.html', stg);
 
 def whole(request, w_id=-1):
-	listexam = Exam.objects.all();
+	if Exam.objects.all().exists():
+		listexam = Exam.objects.all();
+	else:
+		return render(request, 'wrong.html');
+
 	testexam = "";
 
 	parm=[];
@@ -140,7 +148,11 @@ def whole(request, w_id=-1):
 	return render(request, 'wholetitle.html', stg);
 
 def single(request, s_id=-1):
-	listperson = Person.objects.all();
+	if Person.objects.all().exists():
+		listperson = Person.objects.all();
+	else:
+		return render(request, 'wrong.html');
+
 	testperson = "";
 
 	parm=[];
