@@ -87,3 +87,6 @@ def toplist(request):
 
 def info(request):
 	return render(request, 'info.html');
+
+def browser(request):
+	return render(request, 'web/browser.html');
