@@ -1,0 +1,23 @@
+<div>
+	<a href="/admin/">返回</a>
+	<a href="/admin/excelitem">设定科目</a>
+    <a href="/admin/excelperson">添加名册</a>
+	<a href="/admin/excelscore">添加成绩</a>
+</div>
+	<div class="footer">
+		<h1>表格导入说明</h1>
+		<p>表格格式错误将不能正确导入和显示，请按照指定的表格格式操作。如果没有错误，在表格上方会出现按钮，单击进行导入，如果表格数据有误，也会有错误提示。连续导入表格，每一次需重新刷新页面，否则会提示错误。</p>
+		<p>特别提醒：表格不能为空，任何数据格都必须有数据，请自行用数字字符填充。</p>
+		<br />
+		<img src="/Static/img/gpa.png" class="img-thumbnail" />
+		<p><a href="/Static/web/zkeM.xlsx">科目表格格式下载</a></p>
+		<p>科目表格有3列，带有标题行，未防止错误只检测“item”这一列的标题，后列标题不检测，错误的列数和标题将不能导入。</p>
+		<br />
+		<img src="/Static/img/gpaa.jpeg" class="img-thumbnail" />
+		<p><a href="/Static/web/zmingC.xlsx">名册表格格式下载</a></p>
+		<p>人员名册有6列，带有标题行，未防止错误只检测“name”这一列的标题，后面5列标题不检测，错误的列数和标题将不能导入。</p>
+		<br />
+		<img src="/Static/img/gpab.png" class="img-thumbnail" />
+		<p><a href="/Static/web/zchengJ.xlsx">成绩表格格式下载</a></p>
+		<p>成绩表格应当是奇数列，姓名不能是数字。带有标题行，不检测标题行。A1是此次考试的名称，如果和上次的名称一样，将会覆盖上次的考试成绩，每次新的成绩务必更改A1格考试名称。考试成绩必须是在人员名册和科目设置导入后才能正确识别，请仔细核对，繁体简体空格等等。</p>
+	</div>

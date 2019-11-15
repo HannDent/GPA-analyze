@@ -1,4 +1,13 @@
 jQuery(document).ready(function(){
+//设定的科目列表 以及科目分值人数
+	var itemid = new Array();
+	var maxSort = new Array();
+	jQuery("li.item").each(function(){
+		itemid.push(jQuery(this).text());
+	});
+	jQuery("li.maxSort").each(function(){
+		maxSort.push(jQuery(this).text());
+	});
 
 //------------------以下是雷达图部分--------------------------
     var domtest = document.getElementById("cavtest");
@@ -7,26 +16,19 @@ jQuery(document).ready(function(){
     var test = new Array();
     var testdat = new Array();
 
-    jQuery("td.test").each(function(){
+    jQuery("td.n0").each(function(){
         var testemp=jQuery(this).text();
         if (test.includes(testemp)){
         }else{
             test.push(testemp);
-            var testitem = new Array(0,1,2,3,4,5,6,7,8,9);
+            var testitem = new Array(itemid.length);
             testdat.push(testitem);
         }
-        for (var i=0;i<testdat.length;i++){ 
+        for (var i=0;i<testdat.length;i++){
             if (test[i]==testemp){
-            	testdat[i][0]=Number(jQuery(this).parent().find("td.totalSort").text());
-                testdat[i][1]=Number(jQuery(this).parent().find("td.mathsSort").text());
-                testdat[i][2]=Number(jQuery(this).parent().find("td.chineseSort").text());
-                testdat[i][3]=Number(jQuery(this).parent().find("td.englishSort").text());
-                testdat[i][4]=Number(jQuery(this).parent().find("td.physicsSort").text());
-                testdat[i][5]=Number(jQuery(this).parent().find("td.chymistrySort").text());
-                testdat[i][6]=Number(jQuery(this).parent().find("td.biologySort").text());
-                testdat[i][7]=Number(jQuery(this).parent().find("td.historySort").text());
-                testdat[i][8]=Number(jQuery(this).parent().find("td.politicsSort").text());
-                testdat[i][9]=Number(jQuery(this).parent().find("td.geographySort").text());
+				for(var j=0;j<itemid.length;j++){
+					testdat[i][j]=Number(jQuery(this).parent().find("td.n"+String(j*2+2)).text());
+				}
             }
         }
     });
@@ -35,6 +37,12 @@ jQuery(document).ready(function(){
     for (var i=0;i<test.length;i++){
         testdatb.push({value:testdat[i],name:test[i]});
     }
+	
+	var testjson = new Array();
+	for(var i=0;i<itemid.length;i++){
+		var oneitem= {name:itemid[i],min:0,max:maxSort[i]};
+		testjson.push(oneitem);
+	}
 
 
 optiontest = {
@@ -55,18 +63,7 @@ optiontest = {
                 padding: [3, 5]
            }
         },
-        indicator: [
-           { name: '综合', min:10, max:1500},
-           { name: '数学', min:10, max:1500},
-           { name: '语文', min:10, max:1500},
-           { name: '英语', min:10, max:1500},
-           { name: '物理', min:10, max:1500},
-           { name: '化学', min:10, max:1500},
-           { name: '生物', min:10, max:1500},
-           { name: '历史', min:10, max:1500},
-           { name: '政治', min:10, max:1500},
-           { name: '地理', min:10, max:1500},
-        ]
+        indicator: testjson
     },
     series: [{
         name: '各科对比',
@@ -90,6 +87,12 @@ if (optiontest && typeof optiontest === "object") {
             sortdat[i].push(testdat[j][i]);
         }
     }
+	
+	var timejson = new Array();
+	for(var i=0;i<itemid.length;i++){
+		var oneitem= {name:itemid[i],type:'line', lineStyle: {normal: {width: 4,type: 'dashed'}},data:sortdat[i]};
+		timejson.push(oneitem);
+	}
 
 optionsort = {
     title: {
@@ -99,7 +102,7 @@ optionsort = {
         trigger: 'axis'
     },
     legend: {
-        data:['综合','数学','语文','英语','物理','化学','生物','历史','政治','地理']
+        data:itemid
     },
     grid: {
         left: '3%',
@@ -121,65 +124,7 @@ optionsort = {
         name: '年级排名',
         type: 'value',
     },
-    series: [
-        {
-            name:'综合',
-            type:'line',
-            lineStyle: {normal: {width: 4,type: 'dashed'}},
-            data:sortdat[0],
-        },
-        {
-            name:'数学',
-            type:'line',
-            data:sortdat[1],
-        },
-        {
-            name:'语文',
-            type:'line',
-            data:sortdat[2],
-        },
-        {
-            name:'英语',
-            type:'line',
-            data:sortdat[3],
-        },
-        {
-            name:'物理',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:sortdat[4],
-        },
-        {
-            name:'化学',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:sortdat[5],
-        },
-        {
-            name:'生物',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:sortdat[6],
-        },
-        {
-            name:'历史',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:sortdat[7],
-        },
-        {
-            name:'政治',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:sortdat[8],
-        },
-        {
-            name:'地理',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:sortdat[9],
-        },
-    ]
+    series: timejson
 };
 if (optionsort && typeof optionsort === "object") {
     mysort.setOption(optionsort, true);
@@ -191,25 +136,24 @@ if (optionsort && typeof optionsort === "object") {
 
     var timedat = new Array();
 
-    for (var i=0;i<10;i++){ 
+    for (var i=0;i<itemid.length;i++){ 
         var timetemp = new Array(test.length);
         timedat.push(timetemp);
     }
 
-    jQuery("td.test").each(function(){
+    jQuery("td.n0").each(function(){
         var testemp=jQuery(this).text();
         var i=test.indexOf(testemp);
-        timedat[0][i]=Number(jQuery(this).parent().find("td.total").text())/5;
-        timedat[1][i]=Number(jQuery(this).parent().find("td.maths").text());
-        timedat[2][i]=Number(jQuery(this).parent().find("td.chinese").text());
-        timedat[3][i]=Number(jQuery(this).parent().find("td.english").text());
-        timedat[4][i]=Number(jQuery(this).parent().find("td.physics").text());
-        timedat[5][i]=Number(jQuery(this).parent().find("td.chymistry").text());
-        timedat[6][i]=Number(jQuery(this).parent().find("td.biology").text());
-        timedat[7][i]=Number(jQuery(this).parent().find("td.history").text());
-        timedat[8][i]=Number(jQuery(this).parent().find("td.politics").text());
-        timedat[9][i]=Number(jQuery(this).parent().find("td.geography").text());
+		for(var j=0;j<itemid.length;j++){
+			timedat[j][i]=Number(jQuery(this).parent().find("td.n"+String(j*2+1)).text());
+		}
     });
+	
+	var timajson = new Array();
+	for(var i=0;i<itemid.length;i++){
+		var oneitem= {name:itemid[i],type:'line', lineStyle: {normal: {width: 4,type: 'dashed'}},data:timedat[i]};
+		timajson.push(oneitem);
+	}
 
 optiontime = {
     title: {
@@ -219,7 +163,7 @@ optiontime = {
         trigger: 'axis'
     },
     legend: {
-        data:['综合','数学','语文','英语','物理','化学','生物','历史','政治','地理']
+        data:itemid
     },
     grid: {
         left: '3%',
@@ -241,65 +185,7 @@ optiontime = {
         name: '分数',
         type: 'value',
     },
-    series: [
-        {
-            name:'综合',
-            type:'line',
-            lineStyle: {normal: {width: 4,type: 'dashed'}},
-            data:timedat[0],
-        },
-        {
-            name:'数学',
-            type:'line',
-            data:timedat[1],
-        },
-        {
-            name:'语文',
-            type:'line',
-            data:timedat[2],
-        },
-        {
-            name:'英语',
-            type:'line',
-            data:timedat[3],
-        },
-        {
-            name:'物理',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[4],
-        },
-        {
-            name:'化学',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[5],
-        },
-        {
-            name:'生物',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[6],
-        },
-        {
-            name:'历史',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[7],
-        },
-        {
-            name:'政治',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[8],
-        },
-        {
-            name:'地理',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[9],
-        },
-    ]
+    series: timajson
 };
 if (optiontime && typeof optiontime === "object") {
     mytime.setOption(optiontime, true);

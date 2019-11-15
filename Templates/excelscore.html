@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GPA admin</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/Static/admin/css/base.css">
+	<link rel="stylesheet" type="text/css" href="/Static/admin/css/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="/Static/admin/css/responsive.css">
+<meta name="robots" content="NONE,NOARCHIVE">
+</head>
+<body class=" dashboard" data-admin-utc-offset="0">
+<div id="container">
+	<div id="header">
+		<div id="branding">
+			<h1 id="site-name"><a href="/admin/">GPA administration</a></h1>
+		</div>
+		<div id="user-tools">
+                Welcome,
+                <strong>hugh</strong>.
+                    <a href="/">View site</a> /
+                <a href="/admin/password_change/">Change password</a> /
+                <a href="/admin/logout/">Log out</a>
+        </div>
+	</div>
+	<div class="colMS">
+        <h1>单次成绩</h1>
+
+		{% csrf_token %}
+		<input type="file" accept=" application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="upload_excel"/>
+
+		<br />
+		<button hidden id="score">录入成绩</button>
+		<br />
+		<div id="content"></div>
+
+	</div>
+	<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+	{% include "_excel.html" %}
+	<br /><br /><br />
+
+	<script src="/Static/cjss/jqueryGPA.js"></script>
+	<script src="/Static/cjss/xlsxGPA.js"></script>
+	<script src="/Static/cjss/excelscore.js"></script>
+</div>
+</body>
+</html>

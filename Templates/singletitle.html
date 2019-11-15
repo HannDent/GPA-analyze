@@ -23,26 +23,10 @@
                     <thead>
                        <tr class="danger" style="font-weight: bold">
                             <td>考试</td>
-                            <td>数学</td>
-                            <td>名次</td>
-                            <td>语文</td>
-                            <td>名次</td>
-                            <td>英语</td>
-                            <td>名次</td>
-                            <td>物理</td>
-                            <td>名次</td>
-                            <td>化学</td>
-                            <td>名次</td>
-                            <td>生物</td>
-                            <td>名次</td>
-                            <td>历史</td>
-                            <td>名次</td>
-                            <td>政治</td>
-                            <td>名次</td>
-                            <td>地理</td>
-                            <td>名次</td>
-                            <td>总分数</td>
-                            <td>总名次</td>
+                            {% for item in zero %}
+								<td>{{ item.0 }}</td>
+								<td>名次</td>
+							{% endfor %}
                         </tr>
                     </thead>
                     <tbody>
@@ -51,28 +35,10 @@
                             <tr class="success">
                             {% else %}
                             <tr class="warning">
-                        {% endif %}
-                            <td class="test">{{ it.0 }}</td>
-                            <td class="maths">{{ it.1 }}</td>
-                            <td class="mathsSort">{{ it.2 }}</td>
-                            <td class="chinese">{{ it.3 }}</td>
-                            <td class="chineseSort">{{ it.4 }}</td>
-                            <td class="english">{{ it.5 }}</td>
-                            <td class="englishSort">{{ it.6 }}</td>
-                            <td class="physics">{{ it.7 }}</td>
-                            <td class="physicsSort">{{ it.8 }}</td>
-                            <td class="chymistry">{{ it.9 }}</td>
-                            <td class="chymistrySort">{{ it.10 }}</td>
-                            <td class="biology">{{ it.11 }}</td>
-                            <td class="biologySort">{{ it.12 }}</td>
-                            <td class="history">{{ it.13 }}</td>
-                            <td class="historySort">{{ it.14 }}</td>
-                            <td class="politics">{{ it.15 }}</td>
-                            <td class="politicsSort">{{ it.16 }}</td>
-                            <td class="geography">{{ it.17 }}</td>
-                            <td class="geographySort">{{ it.18 }}</td>
-                            <td class="total">{{ it.19 }}</td>
-                            <td class="totalSort">{{ it.20 }}</td>
+							{% endif %}
+							{% for is in it %}
+								<td class="n{{forloop.counter0}}">{{ is }}</td>
+							{% endfor %}
                         </tr>
                         {% endfor %}
                     </tbody>

@@ -1,5 +1,55 @@
 jQuery(document).ready(function(){
+	var minmua=100;
+    var maxmua=1500;
+    var stepmua=100;
+	
+	var minmub=100;
+    var maxmub=1500;
+    var stepmub=100;
 
+//设定的科目列表 以及科目分值人数
+	var itemid = new Array();
+	var maxScore = new Array();
+	var maxSort = new Array();
+	jQuery("li.item").each(function(){
+		itemid.push(jQuery(this).text());
+	});
+	jQuery("li.maxScore").each(function(){
+		maxScore.push(Number(jQuery(this).text()));
+	});
+	jQuery("li.maxSort").each(function(){
+		maxSort.push(Number(jQuery(this).text()));
+	});
+	var titleItem = '';
+	jQuery("li.active").each(function(){
+		titleItem=jQuery(this).text();
+	});
+
+	if(itemid.includes(titleItem)){
+		for(var i=0;i<itemid.length;i++){
+			if(titleItem==itemid[i]){
+				maxmua=parseInt(maxSort[i]/100)*100;
+				if(maxmua<700){
+					stepmua=50;
+				}
+				
+				maxmub=parseInt(maxScore[i]/10)*10;
+				minmub=parseInt(maxmub/29)*10;
+				if(minmub<100){
+					stepmub = 10;
+				}else if(minmub<500){
+					stepmub = 50;
+				}
+				var j = 0;
+				while(j*stepmub+minmub<maxmub){
+					j++;
+				}
+				maxmub = (j-1)*stepmub+minmub;
+			}
+		}
+	}else{
+		alert('wrong!');
+	}
 //total总列表，包含几次考试，每次考试里有两个列表存储totalscore、totalsort
 
 	var total = new Array();
@@ -38,8 +88,8 @@ jQuery(document).ready(function(){
     
 //以下是填入表格数据
     for(var i=0;i<total.length;i++){
-		total[i][0].sort(numsortu)
-		total[i][1].sort(numsortd)
+		total[i][0].sort(numsortd)
+		total[i][1].sort(numsortu)
 
 		var zws = total[i][0][parseInt(total[i][0].length/2)];
 		var pjs = numavg(total[i][0]);
@@ -48,7 +98,7 @@ jQuery(document).ready(function(){
 		var pjsus = 0;
 		var pjsds = 0;
 		for(var l=0;l<total[i][0].length;l++){
-			if(total[i][0][l]<pjs){
+			if(total[i][0][l]>pjs){
 				pjsus = total[i][1][l];
 			}else{
 				pjsds = total[i][1][l];
@@ -85,7 +135,6 @@ jQuery(document).ready(function(){
 	tempzero.push(tempc);
 	tempzero.push(tempd);
 
-//------------------以下是分布图部分--------------------------
 //-------------------以下是折线图部分-----------------------
 	var domus = document.getElementById("cavus");
     var myus = echarts.init(domus);
@@ -148,6 +197,184 @@ optionus = {
 };
 if (optionus && typeof optionus === "object") {
     myus.setOption(optionus, true);
+}
+
+//------------------以下是分布图部分--------------------------
+    var dommutia = document.getElementById("cavas");
+    var mymutia = echarts.init(dommutia);
+
+    var mutixa = new Array();
+    mutixa.push("[1~"+String(minmua)+")");
+
+    var mutiia=minmua;
+    while(mutiia<maxmua){
+        mutixa.push("["+String(mutiia)+"~"+String(mutiia+stepmua)+")");
+        mutiia = mutiia+stepmua;
+    }
+    mutixa.push("["+String(mutiia)+"~∞)");
+
+    var mutilista = new Array();
+
+    for(var i=0;i<total.length;i++){
+        var tempmuti = new Array();
+        var lk=0;
+        var countmu=0;
+        for(var j=0;j<total[i][1].length;j++){
+            if(total[i][1][j]<minmua+lk*stepmua){
+                countmu = countmu+1;
+            }else{
+                while(total[i][1][j]>=minmua+lk*stepmua){
+                    tempmuti.push(countmu);
+                    countmu=0;
+                    lk = lk+1;
+                }
+                countmu = 1;
+            }
+        }
+        if(countmu!=0){
+            tempmuti.push(countmu);
+        }
+
+        var xxx=0;
+        for(var j=tempmuti.length-1;j>parseInt((maxmua-minmua)/stepmua);j--){
+            xxx = xxx+tempmuti.pop();
+        }
+        tempmuti.push(xxx);
+
+        mutilista.push(tempmuti);
+    }
+	var timejsona = new Array();
+	for(var i=0;i<totalname.length;i++){
+		var oneitem= {name:totalname[i],type:'bar',data:mutilista[i]};
+		timejsona.push(oneitem);
+	}
+	
+optionmutia = {
+    title : {
+        text: '排名成绩分布',
+        subtext: '依据年级排名'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:totalname,
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : mutixa,
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : timejsona
+};
+if (optionmutia && typeof optionmutia === "object") {
+    mymutia.setOption(optionmutia, true);
+}
+
+	for(var i=0;i<total.length;i++){
+		total[i][0].sort(numsortu);
+	}
+    var dommutib = document.getElementById("cavbs");
+    var mymutib = echarts.init(dommutib);
+
+    var mutixb = new Array();
+    mutixb.push("[1~"+String(minmub)+")");
+
+    var mutiib=minmub;
+    while(mutiib<maxmub){
+        mutixb.push("["+String(mutiib)+"~"+String(mutiib+stepmub)+")");
+        mutiib = mutiib+stepmub;
+    }
+    mutixb.push("["+String(mutiib)+"~∞)");
+
+    var mutilistb = new Array();
+
+    for(var i=0;i<total.length;i++){
+        var tempmuti = new Array();
+        var lk=0;
+        var countmu=0;
+        for(var j=0;j<total[i][0].length;j++){
+            if(total[i][0][j]<minmub+lk*stepmub){
+                countmu = countmu+1;
+            }else{
+                while(total[i][0][j]>=minmub+lk*stepmub){
+                    tempmuti.push(countmu);
+                    countmu=0;
+                    lk = lk+1;
+                }
+                countmu = 1;
+            }
+        }
+        if(countmu!=0){
+            tempmuti.push(countmu);
+        }
+
+        var xxx=0;
+        for(var j=tempmuti.length-1;j>parseInt((maxmub-minmub)/stepmub);j--){
+            xxx = xxx+tempmuti.pop();
+        }
+        tempmuti.push(xxx);
+
+        mutilistb.push(tempmuti);
+    }
+	var timejsonb = new Array();
+	for(var i=0;i<totalname.length;i++){
+		var oneitem= {name:totalname[i],type:'bar',data:mutilistb[i]};
+		timejsonb.push(oneitem);
+	}
+	
+optionmutib = {
+    title : {
+        text: '分数成绩分布',
+        subtext: '依据分数'
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:totalname,
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : mutixb,
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : timejsonb
+};
+if (optionmutib && typeof optionmutib === "object") {
+    mymutib.setOption(optionmutib, true);
 }
 
 //-------------------以下是折线图离散部分-----------------------

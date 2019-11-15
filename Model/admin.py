@@ -1,4 +1,5 @@
 from django.contrib import admin
+from .models import Course
 from .models import Person
 from .models import Exam
 from .models import Score
@@ -6,6 +7,9 @@ from .models import TopList
 
 # Register your models here.
 
+class CourseAdmin(admin.ModelAdmin):
+	list_display = ('id', 'itemid', 'maxScore', 'maxSort');
+	list_display_links = ('id', 'itemid');
 class PersonAdmin(admin.ModelAdmin):
 	list_display = ('id', 'name', 'gender', 'gradeClass', 'school', 'tel', 'telF');
 	list_display_links = ('id', 'name');
@@ -13,11 +17,12 @@ class ExamAdmin(admin.ModelAdmin):
 	list_display = ('id', 'test', 'time');
 	list_display_links = ('id', 'test');
 class ScoreAdmin(admin.ModelAdmin):
-	list_display = ('name', 'test', 'maths', 'mathsSort', 'chinese', 'chineseSort', 'english', 'englishSort', 'physics', 'physicsSort', 'chymistry', 'chymistrySort', 'biology', 'biologySort', 'history', 'historySort', 'politics', 'politicsSort', 'geography', 'geographySort', 'total', 'totalSort');
+	list_display = ('id', 'name', 'test', 'itemid', 'score', 'sort');
 class TopListAdmin(admin.ModelAdmin):
-	list_display = ('name', 'test', 'item', 'score', 'scoreSort');
+	list_display = ('id', 'name', 'test', 'itemid', 'score', 'sort');
 
-admin.site.register(Person, PersonAdmin);
+admin.site.register(Course,CourseAdmin);
+admin.site.register(Person,PersonAdmin);
 admin.site.register(Exam,ExamAdmin);
 admin.site.register(Score,ScoreAdmin);
 admin.site.register(TopList,TopListAdmin);

@@ -11,16 +11,9 @@
             <div class="col-sm-2 col-xs-12"  style="background-color:#eee;">
                 <br>
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="/analyze/0">综合</a></li>
-                    <li class="list-group-item"><a href="/analyze/1">数学</a></li>
-                    <li class="list-group-item"><a href="/analyze/2">语文</a></li>
-                    <li class="list-group-item"><a href="/analyze/3">英语</a></li>
-                    <li class="list-group-item"><a href="/analyze/4">物理</a></li>
-                    <li class="list-group-item"><a href="/analyze/5">化学</a></li>
-                    <li class="list-group-item"><a href="/analyze/6">生物</a></li>
-                    <li class="list-group-item"><a href="/analyze/7">历史</a></li>
-                    <li class="list-group-item"><a href="/analyze/8">政治</a></li>
-                    <li class="list-group-item"><a href="/analyze/9">地理</a></li>
+                    {% for bb in one %}
+                        <li class="list-group-item"><a href="/analyze/{{ forloop.counter0 }}">{{ bb }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="col-sm-4 col-xs-12"">

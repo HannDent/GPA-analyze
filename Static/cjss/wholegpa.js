@@ -1,4 +1,13 @@
 jQuery(document).ready(function(){
+//设定的科目列表 以及科目分值人数
+	var itemid = new Array();
+	var maxSort = new Array();
+	jQuery("li.item").each(function(){
+		itemid.push(jQuery(this).text());
+	});
+	jQuery("li.maxSort").each(function(){
+		maxSort.push(Number(jQuery(this).text()));
+	});
 
 //total、totalsort为各科目列表的列表，后期需要排序，不能进行相关计算。rcov为成绩原始排序
     var rcov = new Array();
@@ -7,17 +16,15 @@ jQuery(document).ready(function(){
 	var total = new Array();
 	var totalsort = new Array();
 	var totalud = new Array();
-	var totalname = new Array("td#total","td#maths","td#chinese","td#english","td#physics","td#chymistry","td#biology","td#history","td#politics","td#geography");
-    
 
-//以下三项时雷达图数据
+//以下三项是雷达图数据
 	var testdat = new Array(2);
-	testdat[0] = new Array(10);
-	testdat[1] = new Array(10);
+	testdat[0] = new Array(itemid.length);
+	testdat[1] = new Array(itemid.length);
 
 
 //以下是读取数据部分
-	for(var i=0;i<10;i++){
+	for(var i=0;i<itemid.length;i++){
         var teoplist = new Array();
         var tepplist = new Array();
         rcov.push(teoplist);
@@ -31,65 +38,21 @@ jQuery(document).ready(function(){
 		totalud.push(teiplist);
 	}
 
-    jQuery("td.name").each(function(){
-        rcov[0].push(Number(jQuery(this).parent().find("td.total").text()));
-        rcov[1].push(Number(jQuery(this).parent().find("td.maths").text()));
-        rcov[2].push(Number(jQuery(this).parent().find("td.chinese").text()));
-        rcov[3].push(Number(jQuery(this).parent().find("td.english").text()));
-        rcov[4].push(Number(jQuery(this).parent().find("td.physics").text()));
-        rcov[5].push(Number(jQuery(this).parent().find("td.chymistry").text()));
-        rcov[6].push(Number(jQuery(this).parent().find("td.biology").text()));
-        rcov[7].push(Number(jQuery(this).parent().find("td.history").text()));
-        rcov[8].push(Number(jQuery(this).parent().find("td.politics").text()));
-        rcov[9].push(Number(jQuery(this).parent().find("td.geography").text()));
-
-    	total[0].push(Number(jQuery(this).parent().find("td.total").text()));
-    	total[1].push(Number(jQuery(this).parent().find("td.maths").text()));
-    	total[2].push(Number(jQuery(this).parent().find("td.chinese").text()));
-    	total[3].push(Number(jQuery(this).parent().find("td.english").text()));
-    	total[4].push(Number(jQuery(this).parent().find("td.physics").text()));
-    	total[5].push(Number(jQuery(this).parent().find("td.chymistry").text()));
-    	total[6].push(Number(jQuery(this).parent().find("td.biology").text()));
-    	total[7].push(Number(jQuery(this).parent().find("td.history").text()));
-    	total[8].push(Number(jQuery(this).parent().find("td.politics").text()));
-    	total[9].push(Number(jQuery(this).parent().find("td.geography").text()));
-
-        rcos[0].push(Number(jQuery(this).parent().find("td.totalSort").text()));
-        rcos[1].push(Number(jQuery(this).parent().find("td.mathsSort").text()));
-        rcos[2].push(Number(jQuery(this).parent().find("td.chineseSort").text()));
-        rcos[3].push(Number(jQuery(this).parent().find("td.englishSort").text()));
-        rcos[4].push(Number(jQuery(this).parent().find("td.physicsSort").text()));
-        rcos[5].push(Number(jQuery(this).parent().find("td.chymistrySort").text()));
-        rcos[6].push(Number(jQuery(this).parent().find("td.biologySort").text()));
-        rcos[7].push(Number(jQuery(this).parent().find("td.historySort").text()));
-        rcos[8].push(Number(jQuery(this).parent().find("td.politicsSort").text()));
-        rcos[9].push(Number(jQuery(this).parent().find("td.geographySort").text()));
-
-    	totalsort[0].push(Number(jQuery(this).parent().find("td.totalSort").text()));
-    	totalsort[1].push(Number(jQuery(this).parent().find("td.mathsSort").text()));
-    	totalsort[2].push(Number(jQuery(this).parent().find("td.chineseSort").text()));
-    	totalsort[3].push(Number(jQuery(this).parent().find("td.englishSort").text()));
-    	totalsort[4].push(Number(jQuery(this).parent().find("td.physicsSort").text()));
-    	totalsort[5].push(Number(jQuery(this).parent().find("td.chymistrySort").text()));
-    	totalsort[6].push(Number(jQuery(this).parent().find("td.biologySort").text()));
-    	totalsort[7].push(Number(jQuery(this).parent().find("td.historySort").text()));
-    	totalsort[8].push(Number(jQuery(this).parent().find("td.politicsSort").text()));
-    	totalsort[9].push(Number(jQuery(this).parent().find("td.geographySort").text()));
-		
-		totalud[0].push(Number(jQuery(this).parent().find("td.totalSort").text()));
-    	totalud[1].push(Number(jQuery(this).parent().find("td.mathsSort").text()));
-    	totalud[2].push(Number(jQuery(this).parent().find("td.chineseSort").text()));
-    	totalud[3].push(Number(jQuery(this).parent().find("td.englishSort").text()));
-    	totalud[4].push(Number(jQuery(this).parent().find("td.physicsSort").text()));
-    	totalud[5].push(Number(jQuery(this).parent().find("td.chymistrySort").text()));
-    	totalud[6].push(Number(jQuery(this).parent().find("td.biologySort").text()));
-    	totalud[7].push(Number(jQuery(this).parent().find("td.historySort").text()));
-    	totalud[8].push(Number(jQuery(this).parent().find("td.politicsSort").text()));
-    	totalud[9].push(Number(jQuery(this).parent().find("td.geographySort").text()));
+    jQuery("td.n0").each(function(){
+		for(var i=0;i<itemid.length;i++){
+			j = "td.n"+(i*2+1).toString();
+			rcov[i].push(Number(jQuery(this).parent().find(j).text()));
+			total[i].push(Number(jQuery(this).parent().find(j).text()));
+			
+			j = "td.n"+(i*2+2).toString();
+			rcos[i].push(Number(jQuery(this).parent().find(j).text()));
+			totalsort[i].push(Number(jQuery(this).parent().find(j).text()));
+			totalud[i].push(Number(jQuery(this).parent().find(j).text()));
+		}
     });
 
 //以下是填入表格数据
-    for(var i=0;i<10;i++){
+    for(var i=0;i<itemid.length;i++){
 		total[i].sort(numsortu);
 		totalsort[i].sort(numsortd);
 		totalud[i].sort(numsortu);
@@ -114,9 +77,10 @@ jQuery(document).ready(function(){
 		var pjssort = Math.round((pjsus+pjsds)/2);
 		var distribution = (Math.sqrt(fcvar)/pjs).toFixed(3);
 
-		var listscore = new Array(zws, zwssort, pjs, pjssort, distribution);
+		var listscore = new Array(zws, pjs, zwssort, pjssort, distribution);
 		for(var j=0;j<listscore.length;j++){
-			jQuery(totalname[i]+String(j)).text(String(listscore[j]));
+			jstr = "td#p"+String(j+1)+String(i+1);
+			jQuery(jstr).text(String(listscore[j]));
 		}
         //以下是导入雷达图数据
 		testdat[0][i]=zwssort;
@@ -125,10 +89,8 @@ jQuery(document).ready(function(){
 //------------------以下是计算相关系数部分--------------------------
 
     var matrix = new Array();
-    var matrixname = new Array("td#tota","td#math","td#chin","td#engl","td#phys","td#chym","td#biol","td#hist","td#poli","td#geog");
-
-    for(var i=0;i<10;i++){
-        var teoplist = new Array(1,1,1,1,1,1,1,1,1,1);
+    for(var i=0;i<itemid.length;i++){
+        var teoplist = new Array(itemid.length);
         matrix.push(teoplist);
     }
     for(var i=0;i<matrix.length;i++){
@@ -138,17 +100,15 @@ jQuery(document).ready(function(){
             matrix[j][i]=covno;
         }
     }
-    for(var i=0;i<matrixname.length;i++){
+    for(var i=0;i<matrix.length;i++){
         for(var j=0;j<matrix[i].length;j++){
-            jQuery(matrixname[i]+String(j)).text(matrix[i][j]);
+            jQuery("td#a"+String(i+1)+"a"+String(j+1)).text(matrix[i][j]);
         }
     }
 
     var matri = new Array();
-    var matriname = new Array("td#tot","td#mat","td#chi","td#eng","td#phy","td#chy","td#bio","td#his","td#pol","td#geo");
-
-    for(var i=0;i<10;i++){
-        var teoplist = new Array(1,1,1,1,1,1,1,1,1,1);
+    for(var i=0;i<itemid.length;i++){
+        var teoplist = new Array(itemid.length);
         matri.push(teoplist);
     }
     for(var i=0;i<matri.length;i++){
@@ -158,9 +118,9 @@ jQuery(document).ready(function(){
             matri[j][i]=covno;
         }
     }
-    for(var i=0;i<matriname.length;i++){
+    for(var i=0;i<matrix.length;i++){
         for(var j=0;j<matri[i].length;j++){
-            jQuery(matriname[i]+String(j)).text(matri[i][j]);
+            jQuery("td#b"+String(i+1)+"b"+String(j+1)).text(matri[i][j]);
         }
     }
 
@@ -175,6 +135,12 @@ jQuery(document).ready(function(){
     for (var i=0;i<test.length;i++){
         testdatb.push({value:testdat[i],name:test[i]});
     }
+	
+	var testjson = new Array();
+	for(var i=0;i<itemid.length;i++){
+		var oneitem= {name:itemid[i],min:0,max:maxSort[i]};
+		testjson.push(oneitem);
+	}
 
 
 optiontest = {
@@ -195,18 +161,7 @@ optiontest = {
                 padding: [3, 5]
            }
         },
-        indicator: [
-           { name: '综合', min:700, max:1300},
-           { name: '数学', min:700, max:1300},
-           { name: '语文', min:700, max:1300},
-           { name: '英语', min:700, max:1300},
-           { name: '物理', min:700, max:1300},
-           { name: '化学', min:700, max:1300},
-           { name: '生物', min:700, max:1300},
-           { name: '历史', min:700, max:1300},
-           { name: '政治', min:700, max:1300},
-           { name: '地理', min:700, max:1300},
-        ]
+        indicator: testjson
     },
     series: [{
         name: '各科对比',
@@ -226,7 +181,7 @@ if (optiontest && typeof optiontest === "object") {
 
     var minmu=100;
     var maxmu=1500;
-    var stepmu=200;
+    var stepmu=100;
     var mutix = new Array();
     mutix.push("[1~"+String(minmu)+")");
 
@@ -235,7 +190,7 @@ if (optiontest && typeof optiontest === "object") {
         mutix.push("["+String(mutii)+"~"+String(mutii+stepmu)+")");
         mutii = mutii+stepmu;
     }
-    mutix.push("["+String(maxmu)+"~∞)");
+    mutix.push("["+String(mutii)+"~∞)");
 
     var mutilist = new Array();
 
@@ -258,14 +213,21 @@ if (optiontest && typeof optiontest === "object") {
         if(countmu!=0){
             tempmuti.push(countmu);
         }
+
         var xxx=0;
-        for(var j=tempmuti.length-1;j>7;j--){
+        for(var j=tempmuti.length-1;j>parseInt((maxmu-minmu)/stepmu);j--){
             xxx = xxx+tempmuti.pop();
         }
         tempmuti.push(xxx);
 
         mutilist.push(tempmuti);
     }
+	var timejson = new Array();
+	for(var i=0;i<itemid.length;i++){
+		var oneitem= {name:itemid[i],type:'bar',data:mutilist[i]};
+		timejson.push(oneitem);
+	}
+	
 optionmuti = {
     title : {
         text: '各科目分布',
@@ -275,7 +237,7 @@ optionmuti = {
         trigger: 'axis'
     },
     legend: {
-        data:['综合','数学','语文','英语','物理','化学','生物','历史','政治','地理'],
+        data:itemid,
     },
     toolbox: {
         show : true,
@@ -298,50 +260,7 @@ optionmuti = {
             type : 'value'
         }
     ],
-    series : [
-        {
-            name:'综合',
-            type:'bar',
-            data:mutilist[0],
-        },
-        {
-            name:'数学',
-            type:'bar',
-            data:mutilist[1],
-        },{
-            name:'语文',
-            type:'bar',
-            data:mutilist[2],
-        },{
-            name:'英语',
-            type:'bar',
-            data:mutilist[3],
-        },{
-            name:'物理',
-            type:'bar',
-            data:mutilist[4],
-        },{
-            name:'化学',
-            type:'bar',
-            data:mutilist[5],
-        },{
-            name:'生物',
-            type:'bar',
-            data:mutilist[6],
-        },{
-            name:'历史',
-            type:'bar',
-            data:mutilist[7],
-        },{
-            name:'政治',
-            type:'bar',
-            data:mutilist[8],
-        },{
-            name:'地理',
-            type:'bar',
-            data:mutilist[9],
-        },
-    ]
+    series : timejson
 };
 if (optionmuti && typeof optionmuti === "object") {
     mymuti.setOption(optionmuti, true);
@@ -349,28 +268,10 @@ if (optionmuti && typeof optionmuti === "object") {
 
 //------------------以下是分布图部分--------------------------
 
-	gaosi("cavtot", "综合", total[0]);
-	gaosi("cavmat", "数学", total[1]);
-	gaosi("cavchi", "语文", total[2]);
-	gaosi("caveng", "英语", total[3]);
-	gaosi("cavphy", "物理", total[4]);
-	gaosi("cavchy", "化学", total[5]);
-	gaosi("cavbio", "生物", total[6]);
-	gaosi("cavhis", "历史", total[7]);
-	gaosi("cavpol", "政治", total[8]);
-	gaosi("cavgeo", "地理", total[9]);
-
-	jQuery("span#aatot").text(String(numbs(total[0])));
-	jQuery("span#aamat").text(String(numbs(total[1])));
-	jQuery("span#aachi").text(String(numbs(total[2])));
-	jQuery("span#aaeng").text(String(numbs(total[3])));
-	jQuery("span#aaphy").text(String(numbs(total[4])));
-	jQuery("span#aachy").text(String(numbs(total[5])));
-	jQuery("span#aabio").text(String(numbs(total[6])));
-	jQuery("span#aahis").text(String(numbs(total[7])));
-	jQuery("span#aapol").text(String(numbs(total[8])));
-	jQuery("span#aageo").text(String(numbs(total[9])));
-
+	for(var i=0;i<itemid.length;i++){
+		gaosi("cav"+String(i), itemid[i], total[i]);
+		jQuery("span#num"+String(i)).text(String(numbs(total[i])));
+	}
 //it's end
 });
 

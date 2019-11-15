@@ -5,14 +5,6 @@ jQuery(document).ready(function(){
 
     jQuery('#upload_excel').bind('change', handleFile);
 
-    jQuery("button#person").click(function(){
-        jQuery.post('/admin/personpost',{csrfmiddlewaretoken:jQuery("input[name='csrfmiddlewaretoken']").val(), da:exceldat}, function(dat){
-            alert(dat);
-            jQuery('#content').html("");
-            var text_2=document.getElementById("person");
-            text_2.setAttribute("hidden",true);
-        });
-    });
     jQuery("button#score").click(function(){
         jQuery.post('/admin/scorepost',{csrfmiddlewaretoken:jQuery("input[name='csrfmiddlewaretoken']").val(), da:exceldat, exam:excelhead}, function(dat){
             alert(dat);
@@ -54,7 +46,11 @@ function handleFile(e) {
             $.each(date,function (j,val) {
                 val=val.trim();
                 datastr=datastr+'<td style="border: 1px solid #cccccc">'+val+'</td>';
-                exceldat = exceldat+val+"`";
+				if(/^\d+(\.\d+)?$/.test(val)){
+					exceldat = exceldat+val+"`";
+				}else{
+					exceldat = exceldat+val+":";
+				}
             })
             datastr=datastr+'</tr>';
             exceldat = exceldat+'@';
@@ -63,10 +59,7 @@ function handleFile(e) {
         var table='<table style="border: 1px solid #cccccc;border-collapse: collapse;"><thead><tr style="font-weight: bold">'+headstr+'</tr></thead><tbody>'+datastr+ '</tbody></table>';
         jQuery('#content').html( $('#content').html()+table);
 
-        if(num==6 && a1.indexOf("name")==0){
-            var text_2=document.getElementById("person");
-            text_2.removeAttribute("hidden");
-        }else if(num==21){
+        if(num%2==1){
             excelhead = a1;
             var text_2=document.getElementById("score");
             text_2.removeAttribute("hidden");

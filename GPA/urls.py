@@ -29,7 +29,10 @@ urlpatterns = [
     path('toplist', view.toplist),
     
     path('admin/', admin.site.urls),
-    path('admin/excel', viewadmin.excel),
+    path('admin/excelitem', viewadmin.excelitem),
+    path('admin/excelperson', viewadmin.excelperson),
+    path('admin/excelscore', viewadmin.excelscore),
+    path('admin/itempost', viewadmin.itempost),
     path('admin/personpost', viewadmin.personpost),
     path('admin/scorepost', viewadmin.scorepost),
 

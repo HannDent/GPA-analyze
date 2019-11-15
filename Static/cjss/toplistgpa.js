@@ -1,4 +1,13 @@
 jQuery(document).ready(function(){
+	
+	var itemid = new Array();
+	var maxSort = new Array();
+	jQuery("li.item").each(function(){
+		itemid.push(jQuery(this).text());
+	});
+	jQuery("li.maxSort").each(function(){
+		maxSort.push(jQuery(this).text());
+	});
 
 //------------------以下是雷达图部分--------------------------
     var domtest = document.getElementById("cavtest");
@@ -12,54 +21,27 @@ jQuery(document).ready(function(){
         if (test.includes(testemp)){
         }else{
             test.push(testemp);
-            var testitem = new Array(0,1,2,3,4,5,6,7,8,9);
+            var testitem = new Array(itemid.length);
             testdat.push(testitem);
         }
         for (var i=0;i<testdat.length;i++){ 
             if (test[i]==testemp){
-                switch(jQuery(this).parent().find("td.item").text()){
-                    case "综合":
-                        testdat[i][0]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    case "数学":
-                        testdat[i][1]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    case "语文":
-                        testdat[i][2]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    case "英语":
-                        testdat[i][3]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    case "物理":
-                        testdat[i][4]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    case "化学":
-                        testdat[i][5]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    case "生物":
-                        testdat[i][6]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    case "历史":
-                        testdat[i][7]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    case "政治":
-                        testdat[i][8]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    case "地理":
-                        testdat[i][9]=Number(jQuery(this).parent().find("td.sort").text());
-                        break;
-                    default:
-                        alert("wrong");
-                        break;
-                }
+				j = itemid.indexOf(jQuery(this).parent().find("td.item").text());
+				testdat[i][j]=Number(jQuery(this).parent().find("td.sort").text());
             }
         }
     });
-
+	
     var testdatb = new Array();
     for (var i=0;i<test.length;i++){
         testdatb.push({value:testdat[i],name:test[i]});
     }
+	
+	var testjson = new Array();
+	for(var i=0;i<itemid.length;i++){
+		var oneitem= {name:itemid[i],min:0,max:parseInt(maxSort[i]/4)};
+		testjson.push(oneitem);
+	}
 
 
 optiontest = {
@@ -80,21 +62,10 @@ optiontest = {
                 padding: [3, 5]
            }
         },
-        indicator: [
-           { name: '综合', min:0, max:300},
-           { name: '数学', min:0, max:300},
-           { name: '语文', min:0, max:300},
-           { name: '英语', min:0, max:300},
-           { name: '物理', min:0, max:300},
-           { name: '化学', min:0, max:300},
-           { name: '生物', min:0, max:300},
-           { name: '历史', min:0, max:300},
-           { name: '政治', min:0, max:300},
-           { name: '地理', min:0, max:300},
-        ]
+        indicator: testjson
     },
     series: [{
-        name: '预算 vs 开销（Budget vs spending）',
+        name: 'Budget',
         type: 'radar',
         // areaStyle: {normal: {}},
         data : testdatb
@@ -110,50 +81,23 @@ if (optiontest && typeof optiontest === "object") {
 
     var timedat = new Array();
 
-    for (var i=0;i<10;i++){ 
+    for (var i=0;i<itemid.length;i++){ 
         var timetemp = new Array(test.length);
         timedat.push(timetemp);
     }
 
     jQuery("td.item").each(function(){
         var testemp=jQuery(this).parent().find("td.test").text();
-        var i=test.indexOf(testemp);
-        switch(jQuery(this).text()){
-            case "综合":
-                timedat[0][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-            case "数学":
-                timedat[1][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-            case "语文":
-                timedat[2][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-            case "英语":
-                timedat[3][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-            case "物理":
-                timedat[4][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-            case "化学":
-                timedat[5][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-            case "生物":
-                timedat[6][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-            case "历史":
-                timedat[7][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-            case "政治":
-                timedat[8][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-            case "地理":
-                timedat[9][i]=Number(jQuery(this).parent().find("td.sort").text());
-                break;
-             default:
-                alert("wrong");
-                break;
-        }
+		var i = itemid.indexOf(jQuery(this).text());
+        var j = test.indexOf(testemp);
+		timedat[i][j]=Number(jQuery(this).parent().find("td.sort").text());
     });
+	
+	var timejson = new Array();
+	for(var i=0;i<itemid.length;i++){
+		var oneitem= {name:itemid[i],type:'line', lineStyle: {normal: {width: 4,type: 'dashed'}},data:timedat[i]};
+		timejson.push(oneitem);
+	}
 
 optiontime = {
     title: {
@@ -163,7 +107,7 @@ optiontime = {
         trigger: 'axis'
     },
     legend: {
-        data:['综合','数学','语文','英语','物理','化学','生物','历史','政治','地理']
+        data:itemid
     },
     grid: {
         left: '3%',
@@ -186,65 +130,7 @@ optiontime = {
         type: 'value',
         min: 'dataMin',
     },
-    series: [
-        {
-            name:'综合',
-            type:'line',
-            lineStyle: {normal: {width: 4,type: 'dashed'}},
-            data:timedat[0],
-        },
-        {
-            name:'数学',
-            type:'line',
-            data:timedat[1],
-        },
-        {
-            name:'语文',
-            type:'line',
-            data:timedat[2],
-        },
-        {
-            name:'英语',
-            type:'line',
-            data:timedat[3],
-        },
-        {
-            name:'物理',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[4],
-        },
-        {
-            name:'化学',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[5],
-        },
-        {
-            name:'生物',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[6],
-        },
-        {
-            name:'历史',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[7],
-        },
-        {
-            name:'政治',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[8],
-        },
-        {
-            name:'地理',
-            type:'line',
-            lineStyle: {normal: {type: 'dashed'}},
-            data:timedat[9],
-        },
-    ]
+    series: timejson
 };
 if (optiontime && typeof optiontime === "object") {
     mytime.setOption(optiontime, true);
@@ -258,7 +144,6 @@ if (optiontime && typeof optiontime === "object") {
     var name = new Array();
     var namedat = new Array();
 
-
     jQuery("td.name").each(function(){
     	var nametemp = jQuery(this).text();
     	if (name.includes(nametemp)){
@@ -269,6 +154,20 @@ if (optiontime && typeof optiontime === "object") {
     		namedat.push(1);
     	}
     });
+	
+	for(var i=0;i<name.length;i++){
+		for(var j=i;j>0;j--){
+			if(namedat[j]<namedat[j-1]){
+				var tempdat = namedat[j];
+				namedat[j] = namedat[j-1];
+				namedat[j-1] = tempdat;
+				
+				var tempname = name[j];
+				name[j] = name[j-1];
+				name[j-1] = tempname;
+			}
+		}
+	}
 
 optionname = {
     title: {
