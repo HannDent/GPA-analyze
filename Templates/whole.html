@@ -15,15 +15,7 @@
                         <li class="list-group-item"><a href="/whole/{{ forloop.counter0 }}">{{ bb }}</a></li>
                     {% endfor %}
                 </ul>
-    		</div>
-    		<div class="col-sm-6 col-xs-12"">
-                <br>
-    			<img src="Static/img/gpa1.jpeg" class="img-thumbnail" />
-    			<img src="Static/img/gpa2.jpeg" class="img-thumbnail" />
-    			<img src="Static/img/gpa3.jpeg" class="img-thumbnail" />
-    		</div>
-    		<div class="col-sm-4 col-xs-12"">
-                <br>
+				<br>
     			<h3>功能说明</h3>
     			<br>
     			<p><span style="padding-left:2em"></span>整体情况列举出每次考试，可以查看每次考试的具体情况。分为三个板块，分别列举出：中位数、平均数、离散系数、考试科目间的相关系数和偏度等统计量，下面的统计量说明均为通常的统计解释，具体环境还需要具体分析仅具有参考价值。</p>
@@ -35,6 +27,37 @@
     			<p><span style="padding-left:2em"></span>相关系数可反映两个变量之间的相互关系及其相关方向，反映变量之间相关关系密切程度的统计指标。在计算过程中，方差分母用n-1计算（个人习惯）。通常而言绝对值超过0.5可认为两组样本有相关关系，正数为正相关，负数为负相关。</p>
     			<p><span style="padding-left:2em"></span>偏度也称为偏态、偏态系数，是统计数据分布偏斜方向和程度的度量，是统计数据分布非对称程度的数字特征。其实就是样本的三阶矩，也可以反应成绩有没有特别突出的和特别差劲的。</p>
     			<br>
+    		</div>
+    		<div class="col-sm-6 col-xs-12"">
+                <br>
+    			<img src="Static/img/gpa1.jpeg" class="img-thumbnail" />
+    			<img src="Static/img/gpa2.jpeg" class="img-thumbnail" />
+    			<img src="Static/img/gpa3.jpeg" class="img-thumbnail" />
+    		</div>
+    		<div class="col-sm-4 col-xs-12"">
+                <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+                    <caption>平均名次排名</caption>
+                    <thead>
+                        <tr class="danger" style="font-weight: bold">
+							<td>排名</td>
+                            <td>姓名</td>
+							<td>总分平均年级名次</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for it in two %}
+                            {% if forloop.counter|divisibleby:2 %}
+								<tr class="success excelone">
+                            {% else %}
+								<tr class="warning excelone">
+							{% endif %}
+								<td>{{ forloop.counter }}</td>
+								<td>{{ it.0 }}</td>
+								<td>{{ it.1 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
     		</div>
     	</div>
         <br>

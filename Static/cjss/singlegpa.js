@@ -47,7 +47,8 @@ jQuery(document).ready(function(){
 
 optiontest = {
     title: {
-        text: '各科对比'
+        text: '各科对比',
+		y:'50px',
     },
     tooltip: {},
     legend: {
@@ -236,6 +237,112 @@ if (optionname && typeof optionname === "object") {
     myname.setOption(optionname, true);
 }
 
+//-------------------以下是趋势图部分-----------------------
 
+	var regdat = new Array();
+
+    for(var i=0;i<itemid.length;i++){ 
+        var kreg = new Array(test.length);
+		var ereg = new Array(test.length);
+        regdat.push([kreg,ereg]);
+    }
+
+    jQuery("td.m0").each(function(){
+        var testemp=jQuery(this).text();
+        var i=test.indexOf(testemp);
+		for(var j=0;j<itemid.length;j++){
+			regdat[j][0][i]=Number(jQuery(this).parent().find("td.m"+String(j*2+1)).text());
+//			alert("0i:"+String(i)+"...j:"+String(j)+"...||..."+Number(jQuery(this).parent().find("td.m"+String(j*2+1)).text()));
+			regdat[j][1][i]=Number(jQuery(this).parent().find("td.m"+String(j*2+2)).text());
+//			alert("1i:"+String(i)+"...j:"+String(j)+"...||..."+Number(jQuery(this).parent().find("td.m"+String(j*2+2)).text()));
+			
+		}
+    });
+	for(var i=0;i<itemid.length;i++){
+		jQuery("span#num"+String(i)).text(maxSort[i]);
+		gaosi("cav"+String(i), i, itemid[i], regdat[i], test, maxSort);
+	}
 //----------------------------以下是底线--------------------------------
 });
+
+function gaosi(cav, noi, noid, bli, testeam, itemSort)
+{
+    var domreg = document.getElementById(cav);
+    var myreg = echarts.init(domreg);
+
+optionreg = {
+	title: {
+        text: noid+"趋势和残差",
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        }
+    },
+    toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    legend: {
+        data: ['趋势K', '残差e']
+    },
+    xAxis: [
+        {
+            type: 'category',
+            data: testeam,
+            axisPointer: {
+                type: 'shadow'
+            }
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            name: '趋势k',
+            min: -(parseInt(itemSort[noi]/200)*50),
+            max: (parseInt(itemSort[noi]/200)*50),
+            interval: 50,
+            axisLabel: {
+                formatter: '{value} k'
+            }
+        },
+        {
+            type: 'value',
+            name: '残差e',
+            min: 0,
+            max: parseInt(itemSort[noi]/100)*30,
+            interval: 30,
+            axisLabel: {
+                formatter: '{value} e'
+            }
+        }
+    ],
+    series: [
+        {
+            name: '趋势K',
+            type: 'line',
+            data: bli[0],
+        },
+        {
+            name: '残差e',
+            type: 'bar',
+            yAxisIndex: 1,
+            data: bli[1],
+        }
+    ]
+};
+if (optionreg && typeof optionreg === "object") {
+    myreg.setOption(optionreg, true);
+}
+
+}
+
+

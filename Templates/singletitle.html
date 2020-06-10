@@ -44,28 +44,76 @@
                     </tbody>
                 </table>
 
-                <div id="cavtest" style="height: 50%"></div>
-                <div>
-                    <p>为方便理解，这里均用年级排名显示。</p>
-                </div>
-                <hr />
+				<div  class="col-sm-6 col-xs-12">
+					<div id="cavtest" style="height: 50%"></div>
+					<div>
+						<p>为方便理解，这里均用年级排名显示。</p>
+					</div>
+				</div>
+				<div  class="col-sm-6 col-xs-12">
+					<div id="cavname" style="height: 50%"></div>
+					<div>
+						<p>{{ title }}在英雄榜里出现了<span id="aa">{{ a }}</span>次，一共有<span id="bb">{{ b }}</span>次。</p>
+					</div>
+				</div>
+				<hr />
+				<hr />
+				<hr />
 
-                <div id="cavsort" style="height: 50%"></div>
-                <div>
-                    <p>年级排名折线图</p>
-                </div>
+				<div  class="col-sm-12 col-xs-12">
+					<div id="cavsort" style="height: 50%"></div>
+					<div>
+						<p>年级排名折线图</p>
+					</div>
+				</div>
                 <hr />
+				<hr />
 
-                <div id="cavtime" style="height: 50%"></div>
-                <div>
-                    <p>为方便理解，这里均用分数显示，总分除以5后显示。</p>
-                </div>
+				<div  class="col-sm-12 col-xs-12">
+					<div id="cavtime" style="height: 50%"></div>
+					<div>
+						<p>为方便理解，这里均用分数显示。</p>
+					</div>
+				</div>
                 <hr />
+				<hr />
+				
+				<table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
+                    <caption>{{ title }}成绩趋势残差的趋势</caption>
+                    <thead>
+                       <tr class="danger" style="font-weight: bold">
+                            <td>考试</td>
+                            {% for item in zero %}
+								<td>{{ item.0 }}K</td>
+								<td>{{ item.0 }}e</td>
+							{% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for it in three %}
+                            {% if forloop.counter|divisibleby:2 %}
+                            <tr class="success">
+                            {% else %}
+                            <tr class="warning">
+							{% endif %}
+							{% for is in it %}
+								<td class="m{{forloop.counter0}}">{{ is }}</td>
+							{% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
 
-                <div id="cavname" style="height: 50%"></div>
-                <div>
-                    <p>{{ title }}在英雄榜里出现了<span id="aa">{{ a }}</span>次，一共有<span id="bb">{{ b }}</span>次。</p>
-                </div>
+                <hr />
+				<p>k表示进退步趋势，e表示残差。每次考试的k值为当前考试成绩及在此之前考试成绩所表现出来的趋势。</p>
+				{% for item in zero %}
+					<hr /><div  class="col-sm-12 col-xs-12">
+						<div id="cav{{forloop.counter0}}" style="height: 50%"></div>
+						<div>
+							<p>该科目总人数为<span id="num{{forloop.counter0}}">0</span>。</p>
+						</div>
+					</div><hr />
+				{% endfor %}
 
     		</div>
     	</div>
