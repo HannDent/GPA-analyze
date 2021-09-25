@@ -6,7 +6,7 @@ jQuery(document).ready(function(){
     jQuery('#upload_excel').bind('change', handleFile);
 
     jQuery("button#score").click(function(){
-        jQuery.post('/admin/scorepost',{csrfmiddlewaretoken:jQuery("input[name='csrfmiddlewaretoken']").val(), da:exceldat, exam:excelhead}, function(dat){
+        jQuery.post('/scorepost',{csrfmiddlewaretoken:jQuery("input[name='csrfmiddlewaretoken']").val(), da:exceldat, exam:excelhead}, function(dat){
             alert(dat);
             jQuery('#content').html("");
             var text_2=document.getElementById("score");
