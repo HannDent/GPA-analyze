@@ -2,17 +2,30 @@
   {% block base %}
 
     <div class="container">
-    	<ol class="breadcrumb">
-            <li><a href="/">主页</a></li>
+		
+		<div class="row">
+		<div class="col-sm-1 col-xs-1">
+		<select id="group" class="form-control">
+			{% for bb in two %}
+                <option value="{{ forloop.counter0 }}">{{ bb }}</option>
+            {% endfor %}
+		</select>
+		</div>
+		
+		<div class="col-sm-11 col-xs-11">
+		<ol class="breadcrumb">
+			<li><a href="/">主页</a></li>
 			<li class="active">整体情况</li>
 		</ol>
+		</div>
+		</div>
 
     	<div class="row">
     		<div class="col-sm-2 col-xs-12"  style="background-color:#eee;">
                 <br>
     			<ul class="list-group">
                     {% for bb in one %}
-                        <li class="list-group-item"><a href="/whole/{{ forloop.counter0 }}">{{ bb }}</a></li>
+                        <li class="list-group-item"><a class="golink" href="/whole/{{ forloop.counter0 }}/0">{{ bb }}</a></li>
                     {% endfor %}
                 </ul>
 				<br>
@@ -45,7 +58,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for it in two %}
+                        {% for it in three %}
                             {% if forloop.counter|divisibleby:2 %}
 								<tr class="success excelone">
                             {% else %}
@@ -64,3 +77,7 @@
     </div>
 
   {% endblock base %}
+  
+  {% block js %}
+    <script src="/Static/cjss/groupaw.js"></script>
+  {% endblock js %}

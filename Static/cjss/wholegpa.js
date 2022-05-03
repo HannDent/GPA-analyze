@@ -179,9 +179,35 @@ if (optiontest && typeof optiontest === "object") {
     var dommuti = document.getElementById("cavmuti");
     var mymuti = echarts.init(dommuti);
 
-    var minmu=100;
-    var maxmu=1500;
-    var stepmu=100;
+    var minmu=10;
+	var tempbli = maxSort.slice(0);
+	tempbli.sort(numsortd);
+    var maxmu=tempbli[0];
+	var stepmu = parseInt((maxmu-minmu)/10);
+	if(stepmu<2){
+		stepmu=2;
+	}else if(stepmu<5){
+		stepmu=5;
+	}else if(stepmu<10){
+		stepmu=10;
+	}else if(stepmu<20){
+		stepmu=20;
+	}else if(stepmu<50){
+		stepmu=50;
+	}else if(stepmu<100){
+		stepmu=100;
+	}else if(stepmu<200){
+		stepmu=200;
+	}else if(stepmu<500){
+		stepmu=500;
+	}else if(stepmu<1000){
+		stepmu=1000;
+	}else{
+		stepmu=numgz(stepmu);
+	}
+	minmu = (parseInt(minmu/stepmu)+1)*stepmu;
+	maxmu = parseInt(maxmu/stepmu)*stepmu;
+	
     var mutix = new Array();
     mutix.push("[1~"+String(minmu)+")");
 
@@ -331,6 +357,17 @@ function numcov(a, b)//相关系数
     var dyy = numvar(b);
     var iance = (numvar(newlist)-dxx-dyy)/2/Math.sqrt(dxx*dyy);
     return iance.toFixed(2);
+}
+
+function numgz(j)//归整
+{
+	var aa=j;
+	var cc=0;
+	while(aa>0){
+		aa=parseInt(aa/10);
+		cc=cc+1;
+	}
+	return parseInt(j/(10**(cc-1)))*(10**(cc-1));
 }
 
 function gaosi(cav, ati, bli)

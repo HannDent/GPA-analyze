@@ -1,0 +1,119 @@
+﻿{% extends "./_base.html" %}
+  {% block base %}
+
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><a href="/">主页</a></li>
+            <li class="active">班级对比</li>
+        </ol>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="col-sm-2 col-xs-2">
+					<select id="groupl" class="form-control">
+						{% for bb in one %}
+						<option value="{{ forloop.counter0 }}">{{ bb }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-sm-2 col-xs-2">
+					<select id="iteml" class="form-control">
+						{% for bb in two %}
+						<option value="{{ forloop.counter0 }}">{{ bb }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-sm-4 col-xs-4">
+					<select id="testl" class="form-control">
+						{% for bb in three %}
+						<option value="{{ forloop.counter0 }}">{{ bb }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-sm-1 col-xs-1"></div>
+				<div class="col-sm-2 col-xs-2"><button type="button" class="btnl btn-success">确定</button></div>
+				
+				<div id="tablel" class="col-sm-8"></div>
+				<br><br><br><hr>
+				<div id="cavl0" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+				<div id="cavl1" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+				<div id="cavl2" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+				<div id="cavl3" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+				<div id="cavl4" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+            </div>
+
+			<div class="col-sm-6">
+                <div class="col-sm-2 col-xs-2">
+					<select id="groupr" class="form-control">
+						{% for bb in one %}
+						<option value="{{ forloop.counter0 }}">{{ bb }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-sm-2 col-xs-2">
+					<select id="itemr" class="form-control">
+						{% for bb in two %}
+						<option value="{{ forloop.counter0 }}">{{ bb }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-sm-4 col-xs-4">
+					<select id="testr" class="form-control">
+						{% for bb in three %}
+						<option value="{{ forloop.counter0 }}">{{ bb }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="col-sm-1 col-xs-1"></div>
+				<div class="col-sm-2 col-xs-2"><button type="button" class="btnr btn-success">确定</button></div>
+				
+				<div id="tabler" class="col-sm-8"></div>
+				<br><br><br><hr>
+				<div id="cavr0" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+				<div id="cavr1" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+				<div id="cavr2" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+				<div id="cavr3" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+				<div id="cavr4" class="col-sm-12" style="height: 50%"></div>
+				<br><br><br><hr>
+            </div>
+
+		</div>
+		
+		<div class="panel-group col-sm-12 hidden-xs" id="accordion">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">点击展开，显示详细数据。</a>
+						</h4>
+				</div>
+				<div id="collapseTwo" class="panel-collapse collapse">
+					<div class="panel-body">
+						<div class="col-sm-6">
+							<div id="alll"></div>
+						</div>
+						<div class="col-sm-6">
+							<div id="allr"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+        <br>
+    </div>
+
+  {% endblock base %}
+  
+  {% block js %}
+    <script src="/Static/cjss/echartGPA.js"></script>
+    <script src="/Static/cjss/groupgpa.js"></script>
+  {% endblock js %}

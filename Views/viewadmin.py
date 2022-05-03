@@ -3,13 +3,16 @@ from django.shortcuts import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.db.models import Max,Min
-from Model.models import Course,Person,Exam,Score,TopList,Regression
+from Model.models import Course,Groups,Person,Exam,Score,TopList,Regression
 import json
 import math
 
 @login_required(login_url='/admin/login')
 def excelitem(request):
     return render(request, 'excelitem.html');
+@login_required(login_url='/admin/login')
+def excelgroup(request):
+    return render(request, 'excelgroup.html');
 @login_required(login_url='/admin/login')
 def excelperson(request):
     return render(request, 'excelperson.html');
@@ -20,7 +23,7 @@ def excelscore(request):
 @login_required(login_url='/admin/login')
 def itempost(request):
     if Course.objects.count()!=0:
-        return HttpResponse("科目早已设定，重置前禁止设定。");
+        return HttpResponse("科目早已设定，清空前禁止设定。");
     if request.method == "POST":
         jsons = request.POST['da'];
         item = jsons.split("`@");
@@ -42,6 +45,28 @@ def itempost(request):
         return render(request, 'web/404.html');
 
 @login_required(login_url='/admin/login')
+def grouppost(request):
+    if Groups.objects.count()!=0:
+        return HttpResponse("班级早已设定，清空前禁止设定。");
+    if request.method == "POST":
+        jsons = request.POST['da'];
+        item = jsons.split("`@");
+        if len(item[-1])<2:
+            item.pop();
+        try:
+            with transaction.atomic():
+                for oneitem in item:
+                    dbsql = oneitem.split("`");
+                    b=Groups.objects.get_or_create(kurasu=dbsql[0]);
+                    b[0].save();
+        except:
+            return HttpResponse("班级表格数据错误，请核查。");
+        else:
+            return HttpResponse("录入完毕");
+    else:
+        return render(request, 'web/404.html');
+
+@login_required(login_url='/admin/login')
 def personpost(request):
     if request.method == "POST":
         jsons = request.POST['da'];
@@ -52,14 +77,13 @@ def personpost(request):
             with transaction.atomic():
                 for oneperson in item:
                     dbsql = oneperson.split("`");
-                    b=Person.objects.get_or_create(name=dbsql[0]);
-                    b[0].gender=dbsql[1];
-                    b[0].gradeClass=dbsql[2];
-                    b[0].school=dbsql[3];
-                    b[0].tel=dbsql[4];
-                    b[0].telF=dbsql[5];
-                    b[0].kRegression = 0.000;
-                    b[0].eRegression = 0;
+                    dgroup = Groups.objects.get(kurasu=dbsql[1]);
+                    b=Person.objects.get_or_create(name=dbsql[0],kurasu=dgroup);
+                    b[0].gender=dbsql[2];
+                    b[0].gradeClass=dbsql[3];
+                    b[0].school=dbsql[4];
+                    b[0].tel=dbsql[5];
+                    b[0].telF=dbsql[6];
                     b[0].save();
         except:
             return HttpResponse("人员表格数据错误，请核查。");
@@ -148,9 +172,9 @@ def scorepost(request):
                             dd[0].save();
                     except:
                         return HttpResponse("线性回归计算错误，联系管理员");
-
-
             return HttpResponse("录入完毕");
     else:
         return render(request, 'web/404.html');
+        
+    return render(request, 'excelscore.html');
 

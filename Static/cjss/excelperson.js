@@ -54,7 +54,7 @@ function handleFile(e) {
         var table='<table style="border: 1px solid #cccccc;border-collapse: collapse;"><thead><tr style="font-weight: bold">'+headstr+'</tr></thead><tbody>'+datastr+ '</tbody></table>';
         jQuery('#content').html( $('#content').html()+table);
 
-        if(num==6 && a1.indexOf("name")==0){
+        if(num==7 && a1.indexOf("name")==0){
             var text_2=document.getElementById("person");
             text_2.removeAttribute("hidden");
         }else{

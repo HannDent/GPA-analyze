@@ -25,13 +25,13 @@
         </div>
 	</div>
 	<div class="colMS">
-        <h1>单次成绩</h1>
+        <h1>班级</h1>
 
 		{% csrf_token %}
 		<input type="file" accept=" application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" id="upload_excel"/>
 
 		<br />
-		<button hidden id="score">录入成绩</button>
+		<button hidden id="item">录入班级</button>
 		<br />
 		<div id="content"></div>
 
@@ -44,7 +44,7 @@
 
 	<script src="/Static/cjss/jqueryGPA.js"></script>
 	<script src="/Static/cjss/xlsxGPA.js"></script>
-	<script src="/Static/cjss/excelscore.js"></script>
+	<script src="/Static/cjss/excelgroup.js"></script>
 </div>
 </body>
 </html>

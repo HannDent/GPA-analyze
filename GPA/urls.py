@@ -30,16 +30,20 @@ urlpatterns = [
     
     path('admin/', admin.site.urls),
     path('excelitem', viewadmin.excelitem),
+    path('excelgroup', viewadmin.excelgroup),
     path('excelperson', viewadmin.excelperson),
     path('excelscore', viewadmin.excelscore),
     path('itempost', viewadmin.itempost),
+    path('grouppost', viewadmin.grouppost),
     path('personpost', viewadmin.personpost),
     path('scorepost', viewadmin.scorepost),
 
     path('whole', statistics.whole),
-    path('whole/<int:w_id>', statistics.whole),
+    path('whole/<int:w_id>/<int:g_id>', statistics.whole),
     path('analyze', statistics.analyze),
-    path('analyze/<int:a_id>', statistics.analyze),
+    path('analyze/<int:a_id>/<int:g_id>', statistics.analyze),
+    path('group', statistics.group),
+    path('asyn/<int:g_id>/<int:i_id>/<int:e_id>', statistics.asyn),
     path('single', statistics.single),
     path('single/<int:s_id>', statistics.single),
 ]

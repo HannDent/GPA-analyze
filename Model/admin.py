@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Course
+from .models import Groups
 from .models import Person
 from .models import Exam
 from .models import Score
@@ -11,8 +12,11 @@ from .models import Regression
 class CourseAdmin(admin.ModelAdmin):
     list_display = ('id', 'itemid', 'maxScore', 'maxSort');
     list_display_links = ('id', 'itemid');
+class GroupsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'kurasu');
+    list_display_links = ('id', 'kurasu');
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'gender', 'gradeClass', 'school', 'tel', 'telF');
+    list_display = ('id', 'name', 'kurasu', 'gender', 'gradeClass', 'school', 'tel', 'telF');
     list_display_links = ('id', 'name');
 class ExamAdmin(admin.ModelAdmin):
     list_display = ('id', 'test', 'time');
@@ -25,6 +29,7 @@ class RegressionAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'test', 'itemid', 'kRegression', 'eRegression');
 
 admin.site.register(Course,CourseAdmin);
+admin.site.register(Groups,GroupsAdmin);
 admin.site.register(Person,PersonAdmin);
 admin.site.register(Exam,ExamAdmin);
 admin.site.register(Score,ScoreAdmin);

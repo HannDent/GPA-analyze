@@ -1,54 +1,57 @@
 from django.shortcuts import render
-from Model.models import Course,Person,Exam,Score,TopList,Regression
+from django.shortcuts import HttpResponse
+from Model.models import Course,Groups,Person,Exam,Score,TopList,Regression
 from django.db.models.aggregates import Count
 from django.db.models import Min,Max
+import json
 
-def analyze(request, a_id=-1):
+def analyze(request, a_id=-1, g_id=0):
     if Exam.objects.all().exists():
         listexam = Exam.objects.all();
     else:
         return render(request, 'wrong.html');
         
     dlist = Course.objects.all();
+    glist = Groups.objects.all();
     para = [];
     parm=[];
     for aa in dlist:
         parm.append(aa.itemid);
         para.append([aa.itemid,aa.maxScore,aa.maxSort]);
 
-    testcourse = "";
     parc=[];
     if a_id==-1:
-        stg = {'zero':para,'one':parm};
+        parg = [];
+        for aaa in glist:
+            parg.append(aaa.kurasu);
+        stg = {'zero':para,'one':parm,'two':parg};
         return render(request, 'analyze.html', stg);
-    else:
-        testcourse = parm[a_id];
 
     tot = [];
     for aaa in listexam:
-        dat = Course.objects.get(itemid=testcourse).scorecourse.filter(test=aaa);
+        dat = Score.objects.filter(test=aaa,itemid=dlist[a_id]).filter(name__kurasu=glist[g_id]);
         parn = [];
         for bb in dat:
             parn.append([remove_zero(bb.score),bb.sort]);
         tot.append({'title':aaa.test, 'time':aaa.time, 'list':parn});
 
-    stg = {'title':testcourse,'zero':para, 'one':tot};
+    stg = {'item':parm[a_id],'group':glist[g_id].kurasu,'zero':para, 'one':tot};
     return render(request, 'analyzetitle.html', stg);
 
-def whole(request, w_id=-1):
+def whole(request, w_id=-1, g_id=0):
     if Exam.objects.all().exists():
         listexam = Exam.objects.all();
     else:
         return render(request, 'wrong.html');
         
     dlist = Course.objects.all();
+    glist = Groups.objects.all();
     para = [];
     parCourse = [];
     for aa in dlist:
         parCourse.append(aa.itemid);
         para.append([aa.itemid,aa.maxScore,aa.maxSort]);
 
-    testexam = "";
     parm=[];
     for bb in listexam:
         parm.append(bb.test);
@@ -57,6 +60,9 @@ def whole(request, w_id=-1):
 
     if w_id==-1:
         part = [];
+        parg = [];
+        for aaa in glist:
+            parg.append(aaa.kurasu);
         totle = Course.objects.latest('id');
         for onePerson in datPerson:
             datscore = Person.objects.get(name=onePerson).scoreperson.filter(itemid=totle);
@@ -72,22 +78,62 @@ def whole(request, w_id=-1):
                 part[j+1] = part[j];
                 j = j-1;
             part[j+1] = key;
-        stg = {'zero':para, 'one':parm, 'two':part};
+        stg = {'zero':para, 'one':parm, 'two':parg,'three':part};
         return render(request, 'whole.html', stg);
-    else:
-        testexam = parm[w_id];
 
+    datPerson = Person.objects.filter(kurasu=glist[g_id]);
     parb = [];
     for onePerson in datPerson:
-        dat = Exam.objects.get(test=testexam).scoreexam.filter(name=onePerson);
+        dat = Score.objects.filter(test=listexam[w_id],name=onePerson);
         parn = [onePerson.name]*(len(parCourse)*2+1);
         for bb in dat:
             j=parCourse.index(bb.itemid.itemid);
             parn[j*2+1]=remove_zero(bb.score);
             parn[j*2+2]=bb.sort;
         parb.append(parn);
-    stg = {'title':testexam,'zero':para, 'one':parm,'two':parb};
+    stg = {'exam':parm[w_id],'group':glist[g_id].kurasu,'zero':para, 'one':parm,'two':parb};
     return render(request, 'wholetitle.html', stg);
+
+def group(request):
+    para = [];
+    parone = [];
+    partwo = [];
+    parthr = [];
+    
+    glist = Groups.objects.all();
+    for aa in glist:
+        parone.append(aa.kurasu);
+
+    dlist = Course.objects.all();
+    for aa in dlist:
+        partwo.append(aa.itemid);
+        para.append([aa.itemid,aa.maxScore,aa.maxSort]);
+    
+    elist = Exam.objects.all();
+    for aa in elist:
+        parthr.append(aa.test);
+        
+    stg = {'zero':para,'one':parone,'two':partwo,'three':parthr};
+    return render(request, 'group.html', stg);
+
+def asyn(request,g_id=0,i_id=0,e_id=0):
+    glist = Groups.objects.all();
+    ilist = Course.objects.all();
+    elist = Exam.objects.all();
+    
+    parm = [];
+    parn = [];
+    for i in range(e_id,len(elist)):
+        parn.append(elist[i].test);
+        para = [];
+        parb = [];
+        dat = Score.objects.filter(name__kurasu=glist[g_id],itemid=ilist[i_id],test=elist[i]);
+        for aa in dat:
+            para.append(float(aa.score));
+            parb.append(aa.sort);
+        parm.append([para,parb]);
+        
+    return HttpResponse(json.dumps([parm,parn]));
 
 def single(request, s_id=-1):
     if Person.objects.all().exists():

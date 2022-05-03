@@ -5,14 +5,14 @@
     	<ol class="breadcrumb">
             <li><a href="/">主页</a></li>
             <li><a href="/analyze">历史分析</a></li>
-			<li class="active">{{ title }}</li>
+			<li class="active">{{ item }}</li>
 		</ol>
 
     	<div class="row">
     		<div class="">
                 <div class="panel panel-default col-sm-1 hidden-xs">
                     <div class="panel-heading">
-                        <h2 class="panel-title">{{ title }}</h2>
+                        <h2 class="panel-title">{{ group }}</h2>
                     </div>
                 </div>
                 <div class="col-sm-1 hidden-xs"></div>
@@ -26,10 +26,10 @@
 
     		<div class="col-sm-12">
                 <table class="table table-hover" style="border: 1px solid #cccccc;border-collapse: collapse;">
-                    <caption>{{ title }}成绩分析</caption>
+                    <caption>{{ item }}成绩分析</caption>
                     <thead>
                        <tr class="danger" style="font-weight: bold">
-                            <td>{{ title }}</td>
+                            <td>{{ item }}</td>
                             <td>中位数</td>
                             <td>中位数排名</td>
                             <td>平均数</td>

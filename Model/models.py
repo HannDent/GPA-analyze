@@ -9,11 +9,18 @@ class Course(models.Model):
     def __str__(self):
         return self.itemid
 
+class Groups(models.Model):
+    id = models.AutoField(primary_key=True)
+    kurasu = models.CharField(default="一班", max_length=8)
+    def __str__(self):
+        return self.kurasu
+
 class Person(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(default="未命名", max_length=16)
+    kurasu = models.ForeignKey(Groups,related_name = "persongroup",on_delete=models.CASCADE)
     gender = models.CharField(default="男", max_length=8)
-    gradeClass = models.DecimalField(default=2021.17, max_digits=8, decimal_places=2)
+    gradeClass = models.CharField(default="十四中学", max_length=20)
     school = models.CharField(default="实验中学", max_length=20)
     tel = models.CharField(default="130", max_length=16)
     telF = models.CharField(default="130", max_length=16)
